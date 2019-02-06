@@ -709,7 +709,7 @@ function atualizartokenPortariaSair(data){
 
 
 myApp.onPageReinit('index', function (page) {
-    logado()
+    logado();
 });
 
 
