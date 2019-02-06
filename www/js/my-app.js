@@ -601,7 +601,7 @@ function atualizartoken(data){
     setTimeout(function () {
         $.ajax($server+'Gerar_json.php?', {
             type: "post",
-            data: "action=editToken&token="+localStorage.getItem("token")+"&idvendedor="+localStorage.getItem("idvendedor"),
+            data: "action=editToken&token="+localStorage.getItem("token")+"&plataform="+device.platform+"&idvendedor="+localStorage.getItem("idvendedor"),
         })
         .fail(function(data) {
         console.log(data);
