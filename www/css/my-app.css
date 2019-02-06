@@ -1279,9 +1279,6 @@ input[type="date"]:not(.has-value):before, input[type="datetime-local"]:not(.has
 	.maps-size {
 	    height: 500px!important;
 	}
-	.card-content {
-		min-height: 350px!important;
-	}
 	.card-content-cont{
 		min-height: 400px!important;
 	}
