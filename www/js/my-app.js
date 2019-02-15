@@ -1802,7 +1802,7 @@ function cameraProfile() {
     targetWidth: 1500,
     correctOrientation: true,
     targetHeight: 1000,
-    destinationType: Camera.DestinationType.FILE_URI,
+    destinationType: Camera.DestinationType.NATIVE_URI,
     saveToPhotoAlbum: true
     });
 }
@@ -1815,7 +1815,7 @@ function cameraFileProfile(source) {
     allowEdit : true,
     targetWidth: 1500,
     correctOrientation: true,
-    destinationType: Camera.DestinationType.FILE_URI,
+    destinationType: Camera.DestinationType.NATIVE_URI,
     sourceType: Camera.PictureSourceType.PHOTOLIBRARY
     });
 }
