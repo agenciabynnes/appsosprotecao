@@ -1802,7 +1802,7 @@ function cameraProfile() {
     targetWidth: 1500,
     correctOrientation: true,
     targetHeight: 1000,
-    destinationType: Camera.DestinationType.DATA_URL,
+    destinationType: Camera.DestinationType.FILE_URI,
     saveToPhotoAlbum: true
     });
 }
@@ -1815,7 +1815,7 @@ function cameraFileProfile(source) {
     allowEdit : true,
     targetWidth: 1500,
     correctOrientation: true,
-    destinationType: Camera.DestinationType.DATA_URL,
+    destinationType: Camera.DestinationType.FILE_URI,
     sourceType: Camera.PictureSourceType.PHOTOLIBRARY
     });
 }
@@ -1823,8 +1823,8 @@ function cameraFileProfile(source) {
 //
 function onSuccessProfile(imageData) {
     var image = document.getElementById('preview-profile');
-    image.src = "data:image/jpeg;base64," + imageData;
-    //image.src = imageData;
+    //image.src = "data:image/jpeg;base64," + imageData;
+    image.src = imageData;
 
         imagemPerf = $('#preview-profile').attr("src");
         
@@ -1844,7 +1844,14 @@ function onSuccessProfile(imageData) {
             $(".resulttext").hrm(data);
             //progressUpdate({ status: 'done', data: data })
         })
-
+        .catch(function(data){
+            console.log(data);
+            myApp.hideIndicator();
+        })
+        .finally(function(data){
+            console.log(data);
+            myApp.hideIndicator();
+        })
 
         /*$$url = $server+"Gerar_json.php?";
         $.ajax({
