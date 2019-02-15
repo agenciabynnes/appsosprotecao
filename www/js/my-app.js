@@ -1802,7 +1802,7 @@ function cameraProfile() {
     targetWidth: 1500,
     correctOrientation: true,
     targetHeight: 1000,
-    destinationType: Camera.DestinationType.DATA_URL,
+    destinationType: Camera.DestinationType.FILE_URI,
     saveToPhotoAlbum: true
     });
 }
@@ -1815,7 +1815,7 @@ function cameraFileProfile(source) {
     allowEdit : true,
     targetWidth: 1500,
     correctOrientation: true,
-    destinationType: Camera.DestinationType.DATA_URL,
+    destinationType: Camera.DestinationType.FILE_URI,
     sourceType: Camera.PictureSourceType.PHOTOLIBRARY
     });
 }
@@ -1843,6 +1843,7 @@ function onSuccessProfile(imageData) {
             $(".resulttext").hrm(data);
             //progressUpdate({ status: 'done', data: data })
         })
+        
 
         /*$$url = $server+"Gerar_json.php?";
         $.ajax({
