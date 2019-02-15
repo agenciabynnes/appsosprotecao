@@ -1836,7 +1836,7 @@ function onSuccessProfile(imageData) {
             data: "imagem="+imagemPerf+"&op=vendedor&action=imageImei",
             dataType: "json",
          success: function(data){
-            
+
             Tesseract.recognize(data, {
                 lang: "eng"
             })
@@ -1862,6 +1862,7 @@ function onSuccessProfile(imageData) {
         }
          ,error:function(data){
             myApp.hideIndicator();
+            console.log("data = "+data);
             myApp.alert('Erro! Tente novamente.');
          }
         });
