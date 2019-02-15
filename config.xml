@@ -16,7 +16,7 @@ id="com.aptohome.android.crosswalk"
 
 <preference name="phonegap-version" value="cli-6.5.0" />
 
-<plugin name="cordova-plugin-tesseract" spec="https://github.com/gustavomazzoni/cordova-plugin-tesseract"/>
+
 <!-- iOS 3.0.0 e Android 2.4.1 -->
 <plugin name="cordova-plugin-camera" spec="ˆ2.4.1">
     <variable name="CAMERA_USAGE_DESCRIPTION" value="Usamos a câmera para tirar fotos nas aberturas de ocorrências" />

@@ -1825,14 +1825,43 @@ function cameraFileProfile(source) {
 function onSuccessProfile(imageData) {
     var image = document.getElementById('preview-profile');
     image.src = "data:image/jpeg;base64," + imageData;
-    
-    TesseractPlugin.recognizeText(imageData, language, function(recognizedText) {
-        console.log(recognizedText);
-        //alert(recognizedText);
-        $(".resulttext").html(recognizedText);
-    }, function(reason) {
-        console.log('Error on recognizing text from image. ' + reason);
-    });
+
+        imagemPerf = $('#preview-profile').attr("src");
+        
+        myApp.showIndicator();
+
+
+    Tesseract.recognize(imageData, {
+        lang: document.querySelector('#langsel').value
+    })
+        .progress(function(packet){
+            console.info(packet)
+            //progressUpdate(packet)
+        })
+        .then(function(data){
+            console.log(data);
+            $(".resulttext").hrm(data);
+            //progressUpdate({ status: 'done', data: data })
+        })
+
+        /*$$url = $server+"Gerar_json.php?";
+        $.ajax({
+            type: "post",
+            url: $$url,
+            data: "imagem="+imagemPerf+"&op=vendedor&action=imageImei",
+            dataType: "json",
+         success: function(data){
+            myApp.hideIndicator();
+            $(".resulttext").hrm(data);
+
+        }
+         ,error:function(data){
+            myApp.hideIndicator();
+            myApp.alert('Erro! Tente novamente.');
+         }
+        });*/
+
+    //$(".img-preview::before").css("content", "Clique para editar");
 
 }
 function onFailProfile(message) {
@@ -11378,11 +11407,7 @@ function limpar()
         function onDeviceReady() {
 
             //window.ga.startTrackerWithId("UA-77306865-2", 10);
-            TesseractPlugin.loadLanguage("eng", function(response) {
-              console.log(response);
-            }, function(reason) {
-              console.log('Error on loading OCR file for your language. ' + reason);
-            });
+
 
             function TrackButtonClicked() {
                 window.ga.trackEvent( nativePluginResultHandler, nativePluginErrorHandler, "Button", "Click", "event only", 1);
