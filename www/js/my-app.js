@@ -1823,7 +1823,8 @@ function cameraFileProfile(source) {
 //
 function onSuccessProfile(imageData) {
     var image = document.getElementById('preview-profile');
-    image.src = "data:image/jpeg;base64," + imageData;
+    //image.src = "data:image/jpeg;base64," + imageData;
+    image.src = imageData;
 
         imagemPerf = $('#preview-profile').attr("src");
         
@@ -1843,7 +1844,7 @@ function onSuccessProfile(imageData) {
             $(".resulttext").hrm(data);
             //progressUpdate({ status: 'done', data: data })
         })
-        
+
 
         /*$$url = $server+"Gerar_json.php?";
         $.ajax({
