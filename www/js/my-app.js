@@ -1815,7 +1815,6 @@ function cameraFileProfile(source) {
     allowEdit : true,
     targetWidth: 1500,
     correctOrientation: true,
-    targetHeight: 1000,
     destinationType: Camera.DestinationType.DATA_URL,
     sourceType: Camera.PictureSourceType.PHOTOLIBRARY
     });
@@ -1832,7 +1831,7 @@ function onSuccessProfile(imageData) {
 
 
     Tesseract.recognize(imageData, {
-        lang: document.querySelector('#langsel').value
+        lang: "eng"
     })
         .progress(function(packet){
             console.info(packet)
@@ -1840,6 +1839,7 @@ function onSuccessProfile(imageData) {
         })
         .then(function(data){
             console.log(data);
+            myApp.hideIndicator();
             $(".resulttext").hrm(data);
             //progressUpdate({ status: 'done', data: data })
         })
