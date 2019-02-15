@@ -1802,7 +1802,7 @@ function cameraProfile() {
     targetWidth: 1500,
     correctOrientation: true,
     targetHeight: 1000,
-    destinationType: Camera.DestinationType.NATIVE_URI,
+    destinationType: Camera.DestinationType.DATA_URL,
     saveToPhotoAlbum: true
     });
 }
@@ -1815,7 +1815,7 @@ function cameraFileProfile(source) {
     allowEdit : true,
     targetWidth: 1500,
     correctOrientation: true,
-    destinationType: Camera.DestinationType.NATIVE_URI,
+    destinationType: Camera.DestinationType.DATA_URL,
     sourceType: Camera.PictureSourceType.PHOTOLIBRARY
     });
 }
@@ -1823,15 +1823,16 @@ function cameraFileProfile(source) {
 //
 function onSuccessProfile(imageData) {
     var image = document.getElementById('preview-profile');
-    //image.src = "data:image/jpeg;base64," + imageData;
-    image.src = imageData;
+    var imagebase64 = "data:image/jpeg;base64," + imageData;
+    image.src = imagebase64;
+    //image.src = imageData;
 
         imagemPerf = $('#preview-profile').attr("src");
         
         myApp.showIndicator();
 
 
-    Tesseract.recognize(imageData, {
+    Tesseract.recognize(imagebase64, {
         lang: "eng"
     })
         .progress(function(packet){
