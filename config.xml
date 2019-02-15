@@ -18,7 +18,7 @@ id="com.aptohome.android.crosswalk"
 
 <plugin name="cordova-plugin-mobile-ocr" spec="^1.0.1"/>
 <!-- iOS 3.0.0 e Android 2.4.1 -->
-<plugin name="cordova-plugin-camera" spec="2.4.1">
+<plugin name="cordova-plugin-camera" spec="ˆ2.4.1">
     <variable name="CAMERA_USAGE_DESCRIPTION" value="Usamos a câmera para tirar fotos nas aberturas de ocorrências" />
     <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Usamos a galeria para envio de fotos nas aberturas de ocorrências" />
 </plugin>
