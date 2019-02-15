@@ -74,7 +74,7 @@ id="com.aptohome.android.crosswalk"
 
 <platform name="android" >
     <resource-file src="google-services.json" target="google-services.json" />
-    <preference name="android-minSdkVersion" value="17"/>
+    <preference name="android-minSdkVersion" value="18"/>
     <preference name="android-targetSdkVersion" value="28"/>
     <preference name="android-installLocation" value="auto"/>
     <preference name="Fullscreen" value="false"/>
