@@ -444,6 +444,10 @@ textarea {
 .item-checkbox-text{
 	margin-top: 19px;
 }
+/* ocr result */
+.resulttext{
+	padding: 20px 0;
+}
 /* botao input file */
 .custom-file-input{
 	width: 100%!important;

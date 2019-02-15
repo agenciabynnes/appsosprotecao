@@ -16,6 +16,26 @@ id="com.aptohome.android.crosswalk"
 
 <preference name="phonegap-version" value="cli-6.5.0" />
 
+<plugin name="cordova-plugin-mobile-ocr" spec="^1.0.1"/>
+<!-- iOS 3.0.0 e Android 2.4.1 -->
+<plugin name="cordova-plugin-camera" spec="4.1.0">
+    <variable name="CAMERA_USAGE_DESCRIPTION" value="Usamos a câmera para tirar fotos nas aberturas de ocorrências" />
+    <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Usamos a galeria para envio de fotos nas aberturas de ocorrências" />
+</plugin>
+<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+    <string>Usamos a câmera para tirar fotos nas aberturas de ocorrências</string>
+</edit-config>
+<edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+    <string>Usamos a câmera para tirar fotos nas aberturas de ocorrências</string>
+</edit-config>
+<!--<config-file platform="ios" parent="NSPhotoLibraryUsageDescription" mode="merge">  
+      <string>Usamos a galeria para envio de fotos nas aberturas de ocorrências</string> 
+</config-file>-->
+<edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
+    <string>Precisamos de acesso a galeria para salvar as fotos de aberturas de ocorrências</string>
+</edit-config>
+
+
 <plugin name="cordova-plugin-device" spec="^1.1.2"/>
 <plugin name="cordova-plugin-network-information" spec="^1.2.1"/>
 <plugin name="cordova-plugin-inappbrowser" spec="^1.4.0"/>
