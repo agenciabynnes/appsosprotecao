@@ -849,6 +849,948 @@ function logado() {
     //modulos();
 }
 
+//////////////////////// desativar modulos ////////////////////////
+function modulos(){
+        
+    if (localStorage.getItem("condominioId")) {
+        myApp.showIndicator();
+
+        // limpa todas classes do menu antes de verificar os modulos//
+
+        if (localStorage.getItem("sindicoIdsindico") && !localStorage.getItem("moradorIdmorador")) {
+            $$(".menualerta").addClass("invisivel");
+            $$(".menucadastros").addClass("invisivel");
+            $$("#butinserirrespenquetes").hide();
+            //alert("sindico");
+        }
+
+        //se sindico for morador do condominio selecionado
+        if (localStorage.getItem("sindicoIdsindico")) {
+            if (localStorage.getItem("moradorIdCondominio")!=localStorage.getItem("condominioId")) {
+                $$('.menualerta').addClass('invisivel');
+                $$('.menucadastros').addClass('invisivel');
+            }
+        }
+
+        if (localStorage.getItem("administradoraIdadministradora")) {
+            // seleciona itens menu administradora
+            $$('.menualerta').addClass('invisivel');
+            $$('.menucadastros').addClass('invisivel');
+            $$('.menucamera').addClass('invisivel');
+            $$('.menuanuncios').addClass('invisivel');
+            $$('.menubanner').addClass('invisivel');
+            $$("#butinserirrespenquetes").hide();
+            //alert("admin");
+        }
+
+        if (localStorage.getItem("portariaIdportaria")) {
+            // seleciona itens menu portaria
+            $$('.menucomunicado').addClass('invisivel');
+            $$('.menualerta').addClass('invisivel');
+            $$('.menucadastros').addClass('invisivel');
+            $$('.menuocorrencia').addClass('invisivel');
+            $$('.menutransparencia').addClass('invisivel');
+            $$('.menuanuncios').addClass('invisivel');
+            $$('.menuobanner').addClass('invisivel');
+            $$('.menucronograma').addClass('invisivel');
+            $$('.menuboletos').addClass('invisivel');
+            $$('.menuenquetes').addClass('invisivel');
+
+            //alert("portaria");
+        }
+
+
+        $.ajax({
+            url: $server+"functionAppModulos.php?idcondominio="+localStorage.getItem("condominioId")+"&action=list",
+            dataType : "json",
+            success: function(data) {
+                //console.log(data);
+                if (data!=null) {
+                    var qtd = data.moduloapp.length;
+
+                    for (var i = 0; i < qtd; i++) {
+
+                        switch( data.moduloapp[i].idmodulo ){
+                            case '1':
+                                $$(".menucomunicado").addClass("invisivel");
+                            break;
+                            case '2':
+                                $$(".menualerta").addClass("invisivel");
+                            break;
+                            case '3':
+                                $$(".menuespaco").addClass("invisivel");
+                            break;
+                            case '4':
+                                $$(".menuocorrencia").addClass("invisivel");
+                            break;
+                            case '5':
+                                $$(".menucadastros").addClass("invisivel");
+                            break;
+                            case '6':
+                                $$(".menucadastrosmorador").addClass("invisivel");
+                            break;
+                            case '7':
+                                $$(".menecadastrosvisitante").addClass("invisivel");
+                            break;
+                            case '8':
+                                $$(".menucadastrosveiculo").addClass("invisivel");
+                            break;
+                            case '9':
+                                $$(".menutransparencia").addClass("invisivel");
+                            break;
+                            case '10':
+                                $$(".menuanuncios").addClass("invisivel");
+                            break;
+                            case '11':
+                                $$(".menubanner").addClass("invisivel");
+                            break;
+                            case '12':
+                                $$(".menucamera").addClass("invisivel");
+                            break;
+                            case '13':
+                                $$(".menuservico").addClass("invisivel");
+                            break;
+                            case '14':
+                                $$(".menucronograma").addClass("invisivel");
+                            break;
+                            case '15':
+                                localStorage.setItem("popupView",true);
+                            break;
+                            case '16':
+                                $$(".menuenquetes").addClass("invisivel");
+                            break;
+                            case '17':
+                                $$(".menuinterfone").addClass("invisivel");
+                            break;
+                            case '18':
+                                $$(".menupagamentos").addClass("invisivel");
+                            break;
+                            case '19':
+                                $$(".menuboletos").addClass("invisivel");
+                            break;
+                        }
+                    }
+                    // se nao for desabilitado (case 15) mostra o popup
+                    if (localStorage.getItem("moradorIdmorador") && localStorage.getItem("popupView")==null) {
+                        localStorage.setItem("popupView",true);
+                        popupBanner();
+                    }
+                myApp.hideIndicator();
+                }else{
+                    myApp.alert('Erro de conexão com o servidor! O App será fechado.');
+                    navigator.app.exitApp();
+                }
+            }
+             ,error:function(data){
+                console.log(data);
+                myApp.hideIndicator();
+             }
+        });
+    }
+}
+
+//////////////////////////// profile /////////////////////////////
+
+function profile(){
+//console.log("profile");
+    // profile
+    //var profile_image = "<img src="+localStorage.getItem("profileImage")+">";
+    //$('.profile_foto').html(profile_image);
+    $('.profile_nome').html(localStorage.getItem("nome"));
+
+    $('.profile_detalhes').html(localStorage.getItem("email"));
+    
+    atualizartoken(localStorage.getItem("token"));
+        //popupBanner();
+        //mainView.router.loadPage("bannercont");
+        //myApp.alert('Morador editado om sucesso!', function () { mainView.router.load({pageName: 'bannercont'});popupBanner();});
+}
+
+//////////////////////////// profile sindico /////////////////////////////
+function profileSindico(){
+
+    if (localStorage.getItem("sindicoIdsindico") && !localStorage.getItem("moradorIdmorador")) {
+        // seleciona itens menu sindico
+        $$('.menualerta').addClass('invisivel');
+        $$('.menucadastros').addClass('invisivel');
+    }
+
+    //se sindico for morador do condominio selecionado
+    if (localStorage.getItem("sindicoIdsindico")) {
+        if (localStorage.getItem("moradorIdCondominio")!=localStorage.getItem("condominioId")) {
+            $$('.menualerta').addClass('invisivel');
+            $$('.menucadastros').addClass('invisivel');
+        }
+    }
+
+    // profile
+    var profile_image = "<img src="+localStorage.getItem("profileImage")+">";
+    $('.profile_foto').html(profile_image);
+    $('.profile_nome').html(localStorage.getItem("sindicoNome"));
+
+    if(localStorage.getItem("blocoNum")){
+        var bloco_num = localStorage.getItem("blocoNum");
+    }
+    var profile_detalhes = "Condomínio: " + localStorage.getItem("sindicoCondominioNome");
+
+    $('.nameHome').html("Cond. " +localStorage.getItem("sindicoCondominioNome"));
+
+    if (localStorage.getItem("sindicoArrayCondominioId")!=null) {
+        $('.iconRight').html('<a href="#" class="filterCond link icon-only" onclick="listCond();"><i class="icon fa fa-filter"></i></a>');
+    }
+    $('.profile_detalhes').html(profile_detalhes);
+
+    atualizartokenSindico(localStorage.getItem("token"));
+        //mainView.router.loadPage("bannercont");
+        //myApp.alert('Morador editado om sucesso!', function () { mainView.router.load({pageName: 'bannercont'});popupBanner();});
+}
+
+///////////////// lista os condomínio dos síndicos ou administradoras /////////////
+function listCond(){
+    //var clickedLinkListCond = $('.filterCond');
+    mainView.router.loadContent(localStorage.getItem("sindicoListCond"));
+    //myApp.popover(localStorage.getItem("sindicoListCond"), clickedLinkListCond);
+
+}
+///////////////// update para usar o condomíino selecionado ///////////////////////
+function updateCond(id,push){
+    myApp.showIndicator();
+    $.ajax({
+        url: $server+"functionAppSindico.php?idcondominio="+id+"&action=listCondominioSindico",
+        dataType : "json",
+        success: function(data) {
+            myApp.hideIndicator();
+            $$.each(data.condominio, function (chave,dados)
+            {
+                localStorage.setItem("condominioId", dados.idcondominio);
+                localStorage.setItem("sindicoCondominioId", dados.idcondominio);
+                localStorage.setItem("sindicoCondominioNome", dados.condominio_nome);
+                localStorage.setItem("sindicoCondominioStreet", dados.condominio_street);
+                localStorage.setItem("sindicoCondominioNumber", dados.condominio_number);
+                localStorage.setItem("sindicoCondominioDistrict", dados.condominio_district);
+                localStorage.setItem("sindicoCondominioCityname", dados.condominio_cityname);
+                localStorage.setItem("sindicoCondominioUf", dados.condominio_uf);
+
+                profileSindico();
+                modulos();
+                myApp.closeModal();
+                //console.log("push = "+push);
+                if (push!=true) {
+                    window.location = "index.html";
+                }
+            });
+        },error: function(data) {
+            myApp.hideIndicator();
+            //console.log(data);
+            myApp.alert('Erro! Tente novamente.');
+        }
+    });
+
+}
+
+//////////////////////////// profile administradora /////////////////////////////
+function profileAdministradora(){
+
+    // seleciona itens menu administradora
+    $$('.menualerta').addClass('invisivel');
+    $$('.menucadastros').addClass('invisivel');
+    $$('.menucamera').addClass('invisivel');
+    $$('.menuanuncios').addClass('invisivel');
+    $$('.menubanner').addClass('invisivel')
+
+    // profile
+    var profile_image = "<img src="+localStorage.getItem("profileImage")+">";
+    $('.profile_foto').html(profile_image);
+    $('.profile_nome').html(localStorage.getItem("administradoraNome"));
+
+    if(localStorage.getItem("blocoNum")){
+        var bloco_num = localStorage.getItem("blocoNum");
+    }
+    var profile_detalhes = "Condomínio: " + localStorage.getItem("administradoraCondominioNome");
+
+    $('.nameHome').html("Cond. " +localStorage.getItem("administradoraCondominioNome"));
+
+    if (localStorage.getItem("administradoraArrayCondominioId")!=null) {
+        console.log("profile");
+        $('.iconRight').html('<a href="#" class="filterCond link icon-only" onclick="listCondAdministradora();"><i class="icon fa fa-filter"></i></a>');
+    }
+    $('.profile_detalhes').html(profile_detalhes);
+
+    atualizartokenAdministradora(localStorage.getItem("token"));
+        //mainView.router.loadPage("bannercont");
+        //myApp.alert('Morador editado om sucesso!', function () { mainView.router.load({pageName: 'bannercont'});popupBanner();});
+}
+
+function listCondAdministradora(){
+    mainView.router.loadContent(localStorage.getItem("administradoraListCond"));
+    //var clickedLinkListCond = $('.filterCond');
+    //myApp.popover(localStorage.getItem("administradoraListCond"), clickedLinkListCond);
+
+}
+
+function updateCondAdministradora(id,push){
+    myApp.showIndicator();
+    $.ajax({
+        url: $server+"functionAppAdministradora.php?idcondominio="+id+"&action=listCondominioAdministradora",
+        dataType : "json",
+        success: function(data) {
+            myApp.hideIndicator();
+            $$.each(data.condominio, function (chave,dados)
+            {
+                localStorage.setItem("condominioId", dados.idcondominio);
+                localStorage.setItem("administradoraCondominioId", dados.idcondominio);
+                localStorage.setItem("administradoraCondominioNome", dados.condominio_nome);
+                localStorage.setItem("administradoraCondominioStreet", dados.condominio_street);
+                localStorage.setItem("administradoraCondominioNumber", dados.condominio_number);
+                localStorage.setItem("administradoraCondominioDistrict", dados.condominio_district);
+                localStorage.setItem("administradoraCondominioCityname", dados.condominio_cityname);
+                localStorage.setItem("administradoraCondominioUf", dados.condominio_uf);
+
+                profileAdministradora();
+                modulos();
+                myApp.closeModal();
+                if (push!=true) {
+                    window.location = "index.html";
+                }
+            });
+        },error: function(data) {
+            myApp.hideIndicator();
+            //console.log(data);
+            myApp.alert('Erro! Tente novamente.');
+        }
+    });
+
+}
+
+////////////////////////////  profile portaria ///////////////////
+function profilePortaria(){
+
+    // seleciona itens menu portaria
+    
+    $$('.menucomunicado').addClass('invisivel');
+    $$('.menualerta').addClass('invisivel');
+    $$('.menucadastros').addClass('invisivel');
+    $$('.menuocorrencia').addClass('invisivel');
+    $$('.menutransparencia').addClass('invisivel');
+    $$('.menuanuncios').addClass('invisivel');
+    $$('.menuobanner').addClass('invisivel');
+    $$('.menucronograma').addClass('invisivel');
+    // seleciona dashboard portaria
+    $$('.pageindex').addClass('invisivel');
+    $$('.pageportaria').removeClass('invisivel');
+    comunportariahome();
+    alertadechegadahome();
+    searchhomeportaria();
+    visitantealerthome();
+
+    //servico();
+
+    // profile
+    var profile_image = "<img src="+localStorage.getItem("profileImage")+">";
+    $('.profile_foto').html(profile_image);
+    $('.profile_nome').html(localStorage.getItem("portariaNome"));
+
+    if(localStorage.getItem("blocoNum")){
+        var bloco_num = localStorage.getItem("blocoNum");
+    }
+    var profile_detalhes = "Condomínio: " + localStorage.getItem("condominioNome");
+
+    $('.profile_detalhes').html(profile_detalhes);
+    
+    atualizartokenPortaria(localStorage.getItem("token"));
+        //popupBanner();
+        //mainView.router.loadPage("bannercont");
+        //myApp.alert('Morador editado om sucesso!', function () { mainView.router.load({pageName: 'bannercont'});popupBanner();});
+}
+
+
+/////////////////////////// search home portaria //////////////////////////////
+
+function searchhomeportaria(){
+
+
+    var mySearchbar = myApp.searchbar('.searchbar', {
+
+        searchList: '.list-block-search',
+        searchIn: '.item-title,.item-text',
+        removeDiacritics: true,
+        //customSearch: true,
+
+        onEnable: function(s){
+            //console.log('enable');
+            //searchhomeportaria();
+            //$('.inputsearchportariahome').attr("disabled", true);
+        },
+
+        onSearch: function(s){
+            //console.log(s.value);
+        },
+
+        onDisable: function(s){
+            console.log("clear");
+            //mySearchbar.clear();
+            //mySearchbar.disable();
+            //$('#searchportariahome-cont').html("");
+        }
+    });
+
+    console.log("searchhomeportaria");
+    // limpa campo de pesquisa
+    //mySearchbar.clear();
+    mySearchbar.disable();
+        $.ajax({
+            url: $server+"functionAppSearch.php?idcondominio="+localStorage.getItem("condominioId")+"&action=listall",
+            dataType : "json",
+            success: function(data) {
+
+                //$('#searchportariahome-cont').html("");
+
+                if (data!=null) {
+                    //myApp.hideIndicator();
+                    var datasearch = "";
+                    var countdatasearch = "";
+                    var qtdvisitanteaberto = "";
+                    var qtdvisitante = "";
+                    var qtdveiculo = "";
+                    var qtdmorador = "";
+
+                    /*if (data.search.visitante.visitanteAberto) {
+                        qtdvisitanteaberto = data.search.visitante.visitanteAberto.length;
+                        var delvisitante ="";
+                        var cor="";
+
+                        var name ="";
+                        var email ="";
+                        var rg = "";
+                        var cpf = "";
+                        var exibecont = "";
+                        var textnomebloco = "";
+                        var textbloco = "";
+                        var urlVisitante = "";
+
+                        datasearch += '<li class="item-divider"> Visitantes no Condomíni</li>';
+
+                        for (var i = 0; i < qtdvisitanteaberto; i++) {
+
+                            name = data.search.visitante.visitanteAberto[i].name ? data.search.visitante.visitanteAberto[i].name : "";
+                            email = data.search.visitante.visitanteAberto[i].email ? data.search.visitante.visitanteAberto[i].email : "";
+                            cpf = data.search.visitante.visitanteAberto[i].cpf ? 'CPF: ' + data.search.visitante.visitanteAberto[i].cpf+'<br>' : "";
+                            rg = data.search.visitante.visitanteAberto[i].rg ? 'RG: ' + data.search.visitante.visitanteAberto[i].rg+'<br>' : "";
+
+                            cpfexib = cpf ? cpf : "";
+                            rgexib = rg ? rg : "";
+                            cor="#4caf50";
+
+                            // Verifica se o condomínio é sem bloco
+                            if(data.search.visitante.visitanteAberto[i].num_bloco!="Sem bloco"){
+                                var num_bloco = "/" + data.search.visitante.visitanteAberto[i].num_bloco;
+                            }
+                            // Verifica se é visitante para o condomínio
+                            if (data.search.visitante.visitanteAberto[i].num_domicilio!="") {
+                                textnomebloco = name+' ('+data.search.visitante.visitanteAberto[i].num_domicilio+num_bloco+')';
+                            }else{
+                                textnomebloco = name+' (Condomínio)';
+                            }
+                            if (data.search.visitante.visitanteAberto[i].num_domicilio) {
+                                textbloco = 'Apto: '+data.search.visitante.visitanteAberto[i].num_domicilio+num_bloco;
+                            }else{
+                                textbloco = "Condomínio";
+                            }
+
+                            urlVisitante = data.search.visitante.visitanteAberto[i].urlVisitante.replace("http://","https://");
+                            datasearch += '<li class="swipeout item-content">'+
+                                                      '<a href="#visitantecont" onclick="visitantecont('+data.search.visitante.visitanteAberto[i].idvisitante+')" class="swipeout-content item-link item-content">'+
+                                                        '<div class="item-media" style="border:solid 4px '+cor+'">'+
+                                                          '<img src="'+urlVisitante+'" >'+
+                                                        '</div>'+
+                                                        '<div class="item-inner">'+
+                                                          '<div class="item-title-row">'+
+                                                            '<div class="item-title">'+textnomebloco+'</div>'+
+                                                          '</div>'+
+                                                          '<div class="item-text">'+rgexib+'</div>'+
+                                                          '<div class="item-text">'+cpfexib+'</div>'+
+                                                          '<div class="item-text">'+textbloco+'</div>'+
+                                                        '</div>'+
+                                                      '</a>'+
+                                                      '<div class="swipeout-actions-right">'+
+                                                        '<a href="#inserirvisitante" onclick = "editarvisitante('+data.search.visitante.visitanteAberto[i].idvisitante+')"" class="action2 bg-orange">Editar</a>'+
+                                                      '</div>'+
+                                                    '</li>';
+                        }
+                    }*/
+
+                    if (data.search.visitante.visitante) {
+
+                        myArray = data.search.visitante.visitante;
+
+                        function dentro(myArray) {
+                          if (myArray.visitanteaberto===1){
+                            return myArray;
+                          }
+                        }
+                        var arrayVisitantedentro = myArray.filter(dentro);
+
+                        function fora(myArray) {
+                          if (myArray.visitanteaberto===0){
+                            return myArray;
+                          }
+                        }
+                        var arrayVisitantefora = myArray.filter(fora);
+
+                        //console.log("Fora do condominio = "+arrayVisitantefora[0].name);
+                        //console.log("No condominio = "+arrayVisitantedentro[0].name);
+
+                        if (arrayVisitantedentro.length>0){
+                            qtdvisitante = arrayVisitantedentro.length;
+                            var delvisitante ="";
+                            var cor="";
+
+                            var name ="";
+                            var email ="";
+                            var rg = "";
+                            var cpf = "";
+                            var exibecont = "";
+                            var textnomebloco = "";
+                            var textbloco = "";
+                            var urlVisitante = "";
+
+                            datasearch += '<li class="item-divider"> Visitantes no Condomínio</li>';
+
+                            for (var i = 0; i < qtdvisitante; i++) {
+
+                                name = arrayVisitantedentro[i].name ? arrayVisitantedentro[i].name : "";
+                                email = arrayVisitantedentro[i].email ? arrayVisitantedentro[i].email : "";
+                                rg = arrayVisitantedentro[i].rg ? 'RG: ' + arrayVisitantedentro[i].rg+'<br>' : "";
+                                cpf = arrayVisitantedentro[i].cpf ? 'CPF: ' + arrayVisitantedentro[i].cpf+'<br>' : "";
+                                dataini = arrayVisitantedentro[i].horaini ? arrayVisitantedentro[i].horaini : "";
+                                horater = arrayVisitantedentro[i].horater ? arrayVisitantedentro[i].horater : "";
+                                datainiexib = dataini ? 'Início: '+convertMysqldate(dataini) : "";
+                                dataterexib = horater ? '<br> Término: '+convertMysqldate(horater) : "";
+                                datavisit = datainiexib+dataterexib;
+
+                                cpfexib = cpf ? cpf : "";
+                                rgexib = rg ? rg : "";
+
+                                if (arrayVisitantedentro[i].tipo=="1") {
+                                    cor="#4caf50";
+                                    exibecont = cpf;
+                                } else if (arrayVisitantedentro[i].tipo=="2") {
+                                    cor="#4caf50";
+                                    exibecont = cpfexib+datavisit;
+                                }else{
+                                    cor="#4caf50";
+                                    exibecont = cpf;
+                                }
+
+                                // Verifica se o condomínio é sem bloco
+                                if(arrayVisitantedentro[i].num_bloco!="Sem bloco"){
+                                    var num_bloco = "/" + arrayVisitantedentro[i].num_bloco;
+                                }
+                                // Verifica se é visitante para o condomínio
+                                if (arrayVisitantedentro[i].num_domicilio!="") {
+                                    textnomebloco = name+' ('+arrayVisitantedentro[i].num_domicilio+num_bloco+')';
+                                }else{
+                                    textnomebloco = name+' (Condomínio)';
+                                }
+                                if (arrayVisitantedentro[i].num_domicilio) {
+                                    textbloco = 'Apto: '+arrayVisitantedentro[i].num_domicilio+num_bloco;
+                                }else{
+                                    textbloco = "Condomínio";
+                                }
+
+                                urlVisitante = arrayVisitantedentro[i].urlVisitante.replace("http://","https://");
+                                datasearch += '<li class="swipeout item-content">'+
+                                                          '<a href="#visitantecont" onclick="visitantecont('+arrayVisitantedentro[i].idvisitante+')" class="swipeout-content item-link item-content">'+
+                                                            '<div class="item-media" style="border:solid 4px '+cor+'">'+
+                                                              '<img src="'+urlVisitante+'" >'+
+                                                            '</div>'+
+                                                            '<div class="item-inner">'+
+                                                              '<div class="item-title-row">'+
+                                                                '<div class="item-title">'+textnomebloco+'</div>'+
+                                                              '</div>'+
+                                                              '<div class="item-text">'+rgexib+'</div>'+
+                                                              '<div class="item-text">'+exibecont+'</div>'+
+                                                              '<div class="item-text">'+textbloco+'</div>'+
+                                                            '</div>'+
+                                                          '</a>'+
+                                                          '<div class="swipeout-actions-right">'+
+                                                            '<a href="#inserirvisitante" onclick = "editarvisitante('+arrayVisitantedentro[i].idvisitante+')"" class="action2 bg-orange">Editar</a>'+
+                                                          '</div>'+
+                                                        '</li>';
+                            }
+                        }
+
+                        if (arrayVisitantefora.length>0){
+                            qtdvisitante = arrayVisitantefora.length;
+                            var delvisitante ="";
+                            var cor="";
+
+                            var name ="";
+                            var email ="";
+                            var rg = "";
+                            var cpf = "";
+                            var exibecont = "";
+                            var textnomebloco = "";
+                            var textbloco = "";
+                            var urlVisitante = "";
+
+                            datasearch += '<li class="item-divider"> Visitantes Cadastrados</li>';
+
+                            for (var i = 0; i < qtdvisitante; i++) {
+
+                                name = arrayVisitantefora[i].name ? arrayVisitantefora[i].name : "";
+                                email = arrayVisitantefora[i].email ? arrayVisitantefora[i].email : "";
+                                rg = arrayVisitantefora[i].rg ? 'RG: ' + arrayVisitantefora[i].rg+'<br>' : "";
+                                cpf = arrayVisitantefora[i].cpf ? 'CPF: ' + arrayVisitantefora[i].cpf+'<br>' : "";
+                                dataini = arrayVisitantefora[i].horaini ? arrayVisitantefora[i].horaini : "";
+                                horater = arrayVisitantefora[i].horater ? arrayVisitantefora[i].horater : "";
+                                datainiexib = dataini ? 'Início: '+convertMysqldate(dataini) : "";
+                                dataterexib = horater ? '<br> Término: '+convertMysqldate(horater) : "";
+                                datavisit = datainiexib+dataterexib;
+
+                                cpfexib = cpf ? cpf : "";
+                                rgexib = rg ? rg : "";
+
+                                if (arrayVisitantefora[i].tipo=="1") {
+                                    cor="#3f51b5";
+                                    exibecont = cpf;
+                                } else if (arrayVisitantefora[i].tipo=="2") {
+                                    cor="#f44336";
+                                    exibecont = cpfexib+datavisit;
+                                }
+
+                                // Verifica se o condomínio é sem bloco
+                                if(arrayVisitantefora[i].num_bloco!="Sem bloco"){
+                                    var num_bloco = " Bloco: " + arrayVisitantefora[i].num_bloco;
+                                }
+                                // Verifica se é visitante para o condomínio
+                                if (arrayVisitantefora[i].num_domicilio!="") {
+                                    textnomebloco = name+' ('+arrayVisitantefora[i].num_domicilio+num_bloco+')';
+                                }else{
+                                    textnomebloco = name+' (Condomínio)';
+                                }
+                                if (arrayVisitantefora[i].num_domicilio) {
+                                    textbloco = 'Apto: '+arrayVisitantefora[i].num_domicilio+num_bloco;
+                                }else{
+                                    textbloco = "Condomínio";
+                                }
+
+                                urlVisitante = arrayVisitantefora[i].urlVisitante.replace("http://","https://");
+                                datasearch += '<li class="swipeout item-content">'+
+                                                          '<a href="#visitantecont" onclick="visitantecont('+arrayVisitantefora[i].idvisitante+')" class="swipeout-content item-link item-content">'+
+                                                            '<div class="item-media" style="border:solid 4px '+cor+'">'+
+                                                              '<img src="'+urlVisitante+'" >'+
+                                                            '</div>'+
+                                                            '<div class="item-inner">'+
+                                                              '<div class="item-title-row">'+
+                                                                '<div class="item-title">'+textnomebloco+'</div>'+
+                                                              '</div>'+
+                                                              '<div class="item-text">'+rgexib+'</div>'+
+                                                              '<div class="item-text">'+exibecont+'</div>'+
+                                                              '<div class="item-text">'+textbloco+'</div>'+
+                                                            '</div>'+
+                                                          '</a>'+
+                                                          '<div class="swipeout-actions-right">'+
+                                                            '<a href="#inserirvisitante" onclick = "editarvisitante('+arrayVisitantefora[i].idvisitante+')"" class="action2 bg-orange">Editar</a>'+
+                                                          '</div>'+
+                                                        '</li>';
+                            }
+                        }
+                    }
+
+                    if (data.search.veiculo) {
+                        var dataveiculo = "";
+                        qtdveiculo = data.search.veiculo.veiculo.length;
+                        var tipo ="";
+                        var delveiculo ="";
+                        var urlVeiculo = "";
+
+                        datasearch += '<li class="item-divider"> Veículos</li>';
+
+                        for (var i = 0; i < qtdveiculo; i++) {
+
+                            if (data.search.veiculo.veiculo[i].tipo=="1") {
+                                tipo = "Carro";
+                            } else {
+                                tipo = "Moto";
+                            }
+
+                            if(data.search.veiculo.veiculo[i].num_bloco!="Sem bloco"){
+                                var num_bloco = "/" + data.search.veiculo.veiculo[i].num_bloco;
+                            }
+
+                            urlVeiculo = data.search.veiculo.veiculo[i].urlVeiculo.replace("http://","https://");
+                            datasearch += '<li class="item-content">'+
+                                                      '<a href="#veiculocont" onclick="veiculocont('+data.search.veiculo.veiculo[i].idveiculo+')" class="item-link item-content">'+
+                                                        '<div class="item-media" style="border:solid 4px '+data.search.veiculo.veiculo[i].cor+'">'+
+                                                          '<img src="'+urlVeiculo+'" >'+
+                                                        '</div>'+
+                                                        '<div class="item-inner">'+
+                                                          '<div class="item-title-row">'+
+                                                            '<div class="item-title item-title-veiculo">'+data.search.veiculo.veiculo[i].placa+' ('+data.search.veiculo.veiculo[i].num_domicilio+num_bloco+')</div>'+
+                                                          '</div>'+
+                                                          '<div class="item-text">'+tipo+'</div>'+
+                                                          '<div class="item-text">'+data.search.veiculo.veiculo[i].marca+' - '+data.search.veiculo.veiculo[i].modelo+'</div>'+
+                                                          '<div class="item-text">Apto:'+data.search.veiculo.veiculo[i].num_domicilio+num_bloco+'</div>'+
+                                                        '</div>'+
+                                                      '</a>'+
+                                                    '</li>';
+                        }
+                    }
+
+                    if (data.search.morador) {
+                        var datamorador = "";
+                        qtdmorador = data.search.morador.morador.length;
+                        var delmorador = "";
+                        var urlMorador = "";
+
+                        datasearch += '<li class="item-divider"> Moradores</li>';
+
+                        for (var i = 0; i < qtdmorador; i++) {
+
+                            if(data.search.morador.morador[i].num_bloco!="Sem bloco"){
+                                var num_bloco = "/" + data.search.morador.morador[i].num_bloco;
+                            }
+                            
+                            urlMorador = data.search.morador.morador[i].urlMorador.replace("http://","https://");
+                            datasearch += '<li class="item-content">'+
+                                                      '<a href="#moradorcont" onclick="moradorcont('+data.search.morador.morador[i].idmorador+')" class="item-link item-content">'+
+                                                        '<div class="item-media">'+
+                                                          '<img src="'+urlMorador+'" >'+
+                                                        '</div>'+
+                                                        '<div class="item-inner">'+
+                                                          '<div class="item-title-row">'+
+                                                            '<div class="item-title">'+data.search.morador.morador[i].name+' ('+data.search.morador.morador[i].num_domicilio+num_bloco+')</div>'+
+                                                          '</div>'+
+                                                          '<div class="item-text">'+data.search.morador.morador[i].email+'</div>'+
+                                                          '<div class="item-text">Apto:'+data.search.morador.morador[i].num_domicilio+num_bloco+'</div>'+
+                                                        '</div>'+
+                                                      '</a>'+
+                                                    '</li>';
+                        }
+                    }
+                    //atualizar listagem só qando houver diferença
+                    var totalqtd = qtdvisitanteaberto + qtdvisitante + qtdveiculo + qtdmorador;
+                    var qtdsearchportariahome = $('#searchportariahome-cont li').length - 4;
+                    //if (totalqtd!=qtdsearchportariahome) {
+                        //console.log("datasearch = "+qtdvisitanteaberto+" + "+qtdvisitante+" + "+qtdveiculo+" + "+qtdmorador+" = "+totalqtd);
+                        //console.log("searchportariahome = "+ qtdsearchportariahome);
+                        $('#searchportariahome-cont').html(datasearch);
+                    //}
+
+                }else{
+                    //myApp.hideIndicator();
+                    //$('#visitante-cont').html("<li class='semregistro'>Nenhum registro cadastrado</li>");
+                }
+                //setTimeout(searchhomeportaria, 60000);
+            },error: function(data) {
+                //myApp.hideIndicator();
+                //$('#visitante-cont').html("<li class='semregistro'>Nenhum registro cadastrado</li>");
+            }
+        });
+    //alert("Entrei");
+}
+
+////////////////////////////  editar visitante ///////////////////
+function editarvisitante(idvisitante,action){
+    myApp.showIndicator();
+    //var datatransparencia;
+    //$('#cronograma-cont').html("");
+        $('#forminserirvisitante').each (function(){
+          this.reset();
+        });
+        $("#preview-visitante").attr('src',"");
+        $("#txtguidvisitante").val("");
+
+        if (localStorage.getItem("portariaIdportaria")) {
+            $$('.inserirvisitantepermanente').hide();
+            $$('.inserirvisitantetemporario').hide();
+            $$('.inserirvisitantehora').removeClass("visivel");
+
+            $('.blocolistcomunicadoli').addClass('visivel');
+            $('.domiciliolistcomunicadoli').addClass('visivel');
+            listBloco("visitantes");
+        }
+
+        $.ajax({
+            url: $server+"functionAppVisitante.php?idvisitante="+idvisitante+"&status=all&action=listall",
+            dataType : "json",
+            success: function(data) {
+
+                if (data!=null) {
+                    myApp.hideIndicator();
+                    var datavisitante = "";
+                    var qtd = data.visitante.length;
+                    var delvisitante ="";
+                    var cor="";
+
+                    var name ="";
+                    var email ="";
+                    var rg = "";
+                    var cpf = "";
+                    var phone = "";
+                    var dataini = "";
+                    var horater = "";
+                    var urlVisitante ="";
+
+                    name = data.visitante[0].name ? data.visitante[0].name : "";
+                    email = data.visitante[0].email ? data.visitante[0].email : "";
+                    rg = data.visitante[0].rg ? data.visitante[0].rg : "";
+                    cpf = data.visitante[0].cpf ? data.visitante[0].cpf : "";
+                    phone = data.visitante[0].phone ? data.visitante[0].phone : "";
+                    horaini = data.visitante[0].horaini ? data.visitante[0].horaini : "";
+                    horater = data.visitante[0].horater ? data.visitante[0].horater : "";
+                    horaini = horaini.replace(" ","T");
+                    horater = horater.replace(" ","T");
+                    urlVisitante = data.visitante[0].urlVisitante ? data.visitante[0].urlVisitante : "";
+
+
+                    //datavisit = 'Início: '+convertMysqldate(dataini)+'<br> Término: '+convertMysqldate(horater);
+                    $("#txtnomevisitante").val(name);
+                    $("#txtrgvisitante").val(rg);
+                    $("#txtcpfvisitante").val(cpf);
+                    $("#txtphonevisitante").val(phone);
+                    $("#txtemailvisitante").val(email);
+                    $("#txtguidvisitante").val(data.visitante[0].guid);
+                    
+                    if (urlVisitante!="images/sem_avatar_icone.jpg") {
+                        $("#preview-visitante").attr("src",urlVisitante);
+                    }
+
+                    /*if (data.visitante[0].tipo=="2") {
+                        $('input:radio[name="txttipovisitante"][value="2"]').prop('checked', true);
+                        //$("#txttipovisitante val=2").attr("checked","checked");
+                        $$('.inserirvisitantehora').addClass("visivel");
+                        if (action!="expirados") {
+                            $("#txthorainiciotempvisitante").val(horaini);
+                            $("#txthoraterminotempvisitante").val(horater);
+                        }
+                    }*/
+
+                    setTimeout(function(){
+                    console.log("idbloco = "+data.visitante[0].idbloco);
+                    $("#blocolistportariavisitantes option[value='']").removeAttr("selected");
+                    $("#blocolistportariavisitantes option[value="+data.visitante[0].idbloco+"]").attr("selected",true);
+                    $("#blocolistportariavisitantes").hide();
+                    $("#blocolistportariavisitantes").show();
+                    $('#blocolistportariavisitantes').val(data.visitante[0].idbloco).prop('selected', true);
+                    listDomicilio(data.visitante[0].idbloco,"visitantes");
+                    }, 1000);
+
+                    setTimeout(function(){
+                    console.log("iddomicilio = "+data.visitante[0].iddomicilio);
+                    $$("#domiciliolistportariavisitantes option[value='']").removeAttr("selected");
+                    $("#domiciliolistportariavisitantes option[value="+data.visitante[0].iddomicilio+"]").attr("selected",true);
+                    //$('#domiciliolistportariavisitantes option[value="' + data.visitante[0].iddomicilio + '"]').attr({ selected : "selected" });
+                    $$("#domiciliolistportariavisitantes").hide();
+                    $$("#domiciliolistportariavisitantes").show();
+                    $$('#domiciliolistportariavisitantes').val(data.visitante[0].iddomicilio).prop('selected', true);
+                    }, 2000);
+
+                    /*setTimeout(function(){
+                    console.log("iddomicilio 1 = "+data.visitante[0].iddomicilio);
+                    $('#domiciliolistportariavisitantes').val("'"+data.visitante[0].iddomicilio+"'").prop('selected', true);
+                    }, 8000);*/
+
+                }else{
+                    myApp.hideIndicator();
+                    $('#visitante-cont').html("<li class='semregistro'>Nenhum registro cadastrado</li>");
+                }
+            },error: function(data) {
+                myApp.hideIndicator();
+                $('#visitante-cont').html("<li class='semregistro'>Nenhum registro cadastrado</li>");
+            }
+        });
+    //alert("Entrei");
+}
+
+////////////////////////////  list profile editar ///////////////////
+$$('.edit_profile').on('click', function(){
+    console.log("editar profile");
+    /*$$email = $$('#email').val();
+    $$password = $$('#password').val();
+    $$token = $$('#token').val();
+    $$tipoUsuario = "1";*/
+
+    // perfil do usuário
+    if (!localStorage.getItem("sindicoIdsindico") && localStorage.getItem("moradorIdmorador")) {
+        //morador
+        $$tipoUsuario = "1";
+        $(".labelcnpj").hide();
+        $$guid = localStorage.getItem("guid");
+    }
+    if (localStorage.getItem("sindicoIdsindico") && localStorage.getItem("moradorIdmorador")) {
+        //sindico e morador
+        $$tipoUsuario = "2";
+        $(".labelcnpj").hide();
+        $$guid = localStorage.getItem("guid");
+    }
+    if (localStorage.getItem("sindicoIdsindico") && !localStorage.getItem("moradorIdmorador")) {
+        //sindico
+        $$tipoUsuario = "3";
+        $(".labelcnpj").hide();
+        $$guid = localStorage.getItem("sindicoGuid");
+    }
+    if (localStorage.getItem("administradoraIdadministradora")) {
+        //administrador
+        $$tipoUsuario = "4";
+        $(".labeldatanascimento").hide();
+        $(".labelsexo").hide();
+        $(".labelcpf").hide();
+        $$guid = localStorage.getItem("administradoraGuid");
+    }
+    if (localStorage.getItem("portariaIdportaria")) {
+        //porteiro
+        $$tipoUsuario = "5";
+        $(".labelcnpj").hide();
+        $$guid = localStorage.getItem("guid");
+    }
+
+    $$url = $server+"functionAppProfile.php?guid="+$$guid+"&tipodeusuario="+$$tipoUsuario+"&action=list";
+
+        $.ajax({
+             type: "GET",
+             url: $$url,
+             async: false,
+             beforeSend: function(x) {
+              if(x && x.overrideMimeType) {
+               x.overrideMimeType("application/j-son;charset=UTF-8");
+              }
+              myApp.showIndicator();
+         },
+         dataType: "json",
+         success: function(data){
+            
+            $$.each(data.profile, function (chave,dados)
+            {
+
+
+                $('#profilenome').val(dados.name);
+
+                if ($$tipoUsuario!="4") {
+                    if (dados.birth_date!=null) {
+                        $('#profilebirthdate').val(dataamericana(dados.birth_date));
+                    }
+                    $('#profilegender option[value="' + dados.gender + '"]').attr({ selected : "selected" });
+                    $('#profilecpf').val($('#profilecpf').masked(dados.cpf));
+
+                }else{
+                    $('#profilecnpj').val($('#profilecpf').masked(dados.cpf));
+                }
+
+                $('#profilephonenumber').val(dados.phone_number);
+                $('#profilecellphone').val(dados.cell_phone);
+                $("#preview-profile").attr('src',localStorage.getItem("profileImage"));
+            });
+            myApp.hideIndicator();
+        }
+         ,error:function(data){
+            myApp.hideIndicator();
+            myApp.alert('Erro! Favor tentar novamente.');
+         }
+        });
+
+});
 
 /////////////////////////// camera Profile //////////////////////////////
 
@@ -1021,7 +1963,10 @@ function enviarprofile()
         });
         $("#preview-profile").attr('src',"");
  
+        indexofImage = imagemPerf.indexOf("aptohome");
 
+if (indexofImage!="-1") {
+}
          myApp.showIndicator();
         $$url = $server+"functionAppProfile.php?";
         $.ajax({
