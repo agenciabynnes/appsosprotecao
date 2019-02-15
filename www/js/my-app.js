@@ -1826,20 +1826,13 @@ function onSuccessProfile(imageData) {
     var image = document.getElementById('preview-profile');
     image.src = "data:image/jpeg;base64," + imageData;
     
-    textocr.recText(0, 1, imageData, onSuccess, onFail);
-    // for sourceType Use 0,1,2,3 or 4
-    // for returnType Use 0,1,2 or 3 // 3 returns duplicates[see table]
-    function onSuccess(recognizedText) {
-        //var element = document.getElementById('pp');
-        //element.innerHTML=recognizedText;
-        //Use above two lines to show recognizedText in html
+    TesseractPlugin.recognizeText(imageData, language, function(recognizedText) {
         console.log(recognizedText);
         //alert(recognizedText);
         $(".resulttext").html(recognizedText);
-    }
-    function onFail(message) {
-        alert('Failed because: ' + message);
-    }
+    }, function(reason) {
+        console.log('Error on recognizing text from image. ' + reason);
+    });
 
 }
 function onFailProfile(message) {
@@ -11385,7 +11378,11 @@ function limpar()
         function onDeviceReady() {
 
             //window.ga.startTrackerWithId("UA-77306865-2", 10);
-
+            TesseractPlugin.loadLanguage("eng", function(response) {
+              console.log(response);
+            }, function(reason) {
+              console.log('Error on loading OCR file for your language. ' + reason);
+            });
 
             function TrackButtonClicked() {
                 window.ga.trackEvent( nativePluginResultHandler, nativePluginErrorHandler, "Button", "Click", "event only", 1);
