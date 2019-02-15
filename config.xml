@@ -14,7 +14,7 @@ id="com.aptohome.android.crosswalk"
 <allow-navigation href="*"/>
 <allow-intent href="*"/>
 
-<preference name="phonegap-version" value="cli-7.0.1" />
+<preference name="phonegap-version" value="cli-8.0.0" />
 
 <plugin name="cordova-plugin-mobile-ocr" spec="^1.0.1"/>
 <!-- iOS 3.0.0 e Android 2.4.1 -->
@@ -42,10 +42,7 @@ id="com.aptohome.android.crosswalk"
 <plugin name="cordova-plugin-whitelist" spec="^1.2.2"/>
 
 <plugin name="cordova-plugin-file" spec="4.2.0"/>
-<plugin name="cordova-plugin-statusbar" spec="2.1.3"/>
 <plugin name="ionic-plugin-keyboard" spec="2.2.1"/>
-<plugin name="cordova-plugin-dialogs" spec="1.2.1"/>
-
 
 <plugin name="cordova-plugin-splashscreen" spec="3.2.2"/>
 
@@ -82,7 +79,11 @@ id="com.aptohome.android.crosswalk"
     <preference name="AndroidLaunchMode" value="singleTop"/>
     <preference name="android-signed" value="true"/>
 
-    <resource-file src="package-assets/icon-notification.png" target="app/src/main/res/drawable/icon-notification.png" />
+    <resource-file src="package-assets/icon-notification.png" target="app/src/main/res/drawable-mdpi/icon-notification.png" />
+    <resource-file src="package-assets/icon-notification.png" target="app/src/main/res/drawable-hdpi/icon-notification.png" />
+    <resource-file src="package-assets/icon-notification.png" target="app/src/main/res/drawable-xhdpi/icon-notification.png" />
+    <resource-file src="package-assets/icon-notification.png" target="app/src/main/res/drawable-xxhdpi/icon-notification.png" />
+    <resource-file src="package-assets/icon-notification.png" target="app/src/main/res/drawable-xxxhdpi/icon-notification.png" />
 </platform>
 
 <platform name="ios" >
