@@ -1823,53 +1823,48 @@ function cameraFileProfile(source) {
 //
 function onSuccessProfile(imageData) {
     var image = document.getElementById('preview-profile');
-    var imagebase64 = "data:image/jpeg;base64," + imageData;
-    image.src = imagebase64;
-    //image.src = imageData;
+    image.src = "data:image/jpeg;base64," + imageData;
 
         imagemPerf = $('#preview-profile').attr("src");
         
         myApp.showIndicator();
 
-
-    Tesseract.recognize(imagebase64, {
-        lang: "eng"
-    })
-        .progress(function(packet){
-            console.info(packet)
-            //progressUpdate(packet)
-        })
-        .then(function(data){
-            console.log(data);
-            myApp.hideIndicator();
-            $(".resulttext").hrm(data);
-            //progressUpdate({ status: 'done', data: data })
-        })
-        .catch(function(data){
-            console.log(data);
-            myApp.hideIndicator();
-        })
-        .finally(function(data){
-            console.log(data);
-            myApp.hideIndicator();
-        })
-
-        /*$$url = $server+"Gerar_json.php?";
+        $$url = $server+"Gerar_json.php?";
         $.ajax({
             type: "post",
             url: $$url,
             data: "imagem="+imagemPerf+"&op=vendedor&action=imageImei",
             dataType: "json",
          success: function(data){
-            myApp.hideIndicator();
-            $(".resulttext").hrm(data);
+            
+            Tesseract.recognize(data, {
+                lang: "eng"
+            })
+            .progress(function(packet){
+                console.info(packet)
+                //progressUpdate(packet)
+            })
+            .then(function(data){
+                console.log(data);
+                myApp.hideIndicator();
+                $(".resulttext").html(data.text);
+                //progressUpdate({ status: 'done', data: data })
+            })
+            .catch(function(data){
+                console.log(data);
+                myApp.hideIndicator();
+            })
+            .finally(function(data){
+                console.log(data);
+                myApp.hideIndicator();
+            })
 
         }
          ,error:function(data){
             myApp.hideIndicator();
             myApp.alert('Erro! Tente novamente.');
          }
-        });*/
+        });
 
     //$(".img-preview::before").css("content", "Clique para editar");
 
