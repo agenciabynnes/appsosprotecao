@@ -14,7 +14,7 @@ id="com.aptohome.android.crosswalk"
 <allow-navigation href="*"/>
 <allow-intent href="*"/>
 
-<preference name="phonegap-version" value="cli-8.0.0" />
+<preference name="phonegap-version" value="cli-7.0.1" />
 
 <plugin name="cordova-plugin-mobile-ocr" spec="^1.0.1"/>
 <!-- iOS 3.0.0 e Android 2.4.1 -->
