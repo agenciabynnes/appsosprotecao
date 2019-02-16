@@ -1836,12 +1836,12 @@ function onSuccessProfile(imageData) {
             data: "imagem="+imagemPerf+"&op=vendedor&action=imageImei",
             dataType: "json",
          success: function(data){
-
+            console.log(data[0]);
             Tesseract.recognize(data, {
                 lang: "eng"
             })
             .progress(function(packet){
-                console.info(packet)
+                console.log(packet);
                 //progressUpdate(packet)
             })
             .then(function(data){
