@@ -1792,7 +1792,6 @@ function cameraProfile() {
     quality: 80,
     targetWidth: 1500,
     correctOrientation: true,
-    targetHeight: 1000,
     destinationType: Camera.DestinationType.FILE_URI,
     saveToPhotoAlbum: true
     });
