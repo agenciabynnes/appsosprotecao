@@ -6,9 +6,6 @@ var myApp = new Framework7({
     tapHoldPreventClicks: true,
      // Enable Material theme
     material: true,
-    swipePanel: 'left',
-    swipePanelNoFollow: 'true',
-    swipePanelActiveArea: '80',
     swipeBackPage: false,
     fastClick: true,
     notificationCloseOnClick: true,
@@ -1817,6 +1814,15 @@ function cameraFileProfile(source) {
 // Called if something bad happens.
 //
 function onSuccessProfile(imageData) {
+
+
+        $('.containeruse').html("");
+        $('.containeruse').html('<a href="#" id="use" class="button button-big button-fill button-raised color-orange">DIGITALIZAR</a>');
+        $(".img-preview").html("");
+        $(".img-preview").html('<img src="" id="upload-demo" width="400" height="300">');
+        $(".resulttext").html("");
+        $(".resulttext").removeAttr("style");
+        $('#uploadimei').removeClass("show");
 
     var image = "data:image/jpeg;base64," + imageData;
 
