@@ -1827,7 +1827,7 @@ function onSuccessProfile(imageData) {
     //var image = "data:image/jpeg;base64," + imageData;
 
     $('#upload-demo').attr('src', imageData);
-    var resize = new Croppie(document.getElementById('upload-demo'), {
+    var resize = new Croppie(document.getElementById('img-preview'), {
         viewport: { width: 200, height: 50 },
         boundary: { width: 300, height: 200 },
         showZoomer: true,
