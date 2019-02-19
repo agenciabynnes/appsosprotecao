@@ -1819,7 +1819,7 @@ function onSuccessProfile(imageData) {
         $('.containeruse').html("");
         $('.containeruse').html('<a href="#" id="use" class="button button-big button-fill button-raised color-orange">DIGITALIZAR</a>');
         $(".img-preview").html("");
-        $(".img-preview").html('<img src="" id="upload-demo" width="400" height="300">');
+        $(".img-preview").html('<img src="" id="upload-demo">');
         $(".resulttext").html("");
         $(".resulttext").removeAttr("style");
         $('#uploadimei').removeClass("show");
@@ -1827,7 +1827,7 @@ function onSuccessProfile(imageData) {
     //var image = "data:image/jpeg;base64," + imageData;
 
     $('#upload-demo').attr('src', imageData);
-    var resize = new Croppie(document.getElementById('img-preview'), {
+    var resize = new Croppie(document.getElementById('upload-demo'), {
         viewport: { width: 200, height: 50 },
         boundary: { width: 300, height: 200 },
         showZoomer: true,
@@ -1962,7 +1962,7 @@ $('#uploadimei').on('click', function() {
             $('.containeruse').html("");
             $('.containeruse').html('<a href="#" id="use" class="button button-big button-fill button-raised color-orange">DIGITALIZAR</a>');
             $(".img-preview").html("");
-            $(".img-preview").html('<img src="" id="upload-demo" width="400" height="300">');
+            $(".img-preview").html('<img src="" id="upload-demo">');
             $(".resulttext").html("");
             $(".resulttext").removeAttr("style");
             $('#uploadimei').removeClass("show");
