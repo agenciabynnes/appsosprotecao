@@ -1831,7 +1831,8 @@ function onSuccessProfile(imageData) {
         viewport: { width: 200, height: 50 },
         boundary: { width: 300, height: 200 },
         showZoomer: true,
-        enableResize: true
+        enableResize: true,
+        enableOrientation: true
     });
 
     $('#use').addClass("show");
@@ -1839,7 +1840,8 @@ function onSuccessProfile(imageData) {
         //console.log("upload");
         myApp.showIndicator();
 
-        resize.result('base64').then(function(dataImg) {
+        resize.result('base64').then(function(imageData) {
+            console.log(dataImg);
             //var data = [{ image: dataImg }, { name: 'myimgage.jpg' }];
             dataImgCod = dataImg.replace('data:image/png;base64,', '');
             var objeto = {
