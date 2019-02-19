@@ -471,7 +471,7 @@ textarea {
 }
 /* botao input file */
 .custom-file-input{
-	width: 100%!important;
+	    width: calc(100% - 20px)!important;
 	opacity: 0;
 	min-height: 52px;
 	line-height: 52px;
