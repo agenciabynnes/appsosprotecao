@@ -1818,6 +1818,8 @@ function cameraFileProfile(source) {
 //
 function onSuccessProfile(imageData) {
 
+    var imageData = "data:image/jpeg;base64," + imageData;
+
     $('#upload-demo').attr('src', imageData);
     var resize = new Croppie($('#upload-demo'), {
         viewport: { width: 200, height: 50 },
