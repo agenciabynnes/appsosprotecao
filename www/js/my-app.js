@@ -1818,9 +1818,9 @@ function cameraFileProfile(source) {
 //
 function onSuccessProfile(imageData) {
 
-    var imageData = "data:image/jpeg;base64," + imageData;
+    var image = "data:image/jpeg;base64," + imageData;
 
-    $('#upload-demo').attr('src', imageData);
+    $('#upload-demo').attr('src', image);
     var resize = new Croppie($('#upload-demo'), {
         viewport: { width: 200, height: 50 },
         boundary: { width: 300, height: 200 },
