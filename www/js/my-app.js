@@ -1843,7 +1843,7 @@ function onSuccessProfile(imageData) {
         resize.result('base64').then(function(imageData) {
             //console.log(dataImg);
             //var data = [{ image: dataImg }, { name: 'myimgage.jpg' }];
-            dataImgCod = dataImg.replace('data:image/png;base64,', '');
+            dataImgCod = imageData.replace('data:image/png;base64,', '');
             var objeto = {
                           "requests": [
                             {
