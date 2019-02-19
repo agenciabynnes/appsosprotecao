@@ -1790,7 +1790,6 @@ function cameraProfile() {
 // Take picture using device camera and retrieve image as base64-encoded string
     navigator.camera.getPicture(onSuccessProfile, onFailProfile, {
     quality: 80,
-    allowEdit : true,
     targetWidth: 1500,
     correctOrientation: true,
     targetHeight: 1000,
@@ -1804,7 +1803,6 @@ function cameraFileProfile(source) {
 // Retrieve image file location from specified source
     navigator.camera.getPicture(onSuccessProfile, onFailProfile, {
     quality: 80,
-    allowEdit : true,
     targetWidth: 1500,
     correctOrientation: true,
     destinationType: Camera.DestinationType.FILE_URI,
