@@ -1825,8 +1825,7 @@ function onSuccessProfile(imageData) {
         viewport: { width: 200, height: 50 },
         boundary: { width: 300, height: 200 },
         showZoomer: true,
-        enableResize: true,
-        enableOrientation: true
+        enableResize: true
     });
 
     $('#use').addClass("show");
