@@ -1821,9 +1821,9 @@ function onSuccessProfile(imageData) {
         $(".resulttext").removeAttr("style");
         $('#uploadimei').removeClass("show");
 
-    //var image = "data:image/jpeg;base64," + imageData;
+    var image = "data:image/jpeg;base64," + imageData;
 
-    $('#upload-demo').attr('src', imageData);
+    $('#upload-demo').attr('src', image);
     var resize = new Croppie(document.getElementById('upload-demo'), {
         viewport: { width: 200, height: 70 },
         boundary: { width: 300, height: 200 },
