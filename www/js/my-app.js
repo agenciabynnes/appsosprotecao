@@ -1930,6 +1930,10 @@ function onSuccessProfile(imageData) {
     })
 }
 
+function onFailProfile(message) {
+//alert('Failed because: ' + message);
+}
+
 $('#uploadimei').on('click', function() {
 
         myApp.showIndicator();
@@ -1963,10 +1967,6 @@ $('#uploadimei').on('click', function() {
 
 });
 
-
-function onFailProfile(message) {
-//alert('Failed because: ' + message);
-}
 
 //////////////////////// camera morador options ////////////////////////
 
