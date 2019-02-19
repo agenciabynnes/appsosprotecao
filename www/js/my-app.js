@@ -1817,190 +1817,118 @@ function cameraFileProfile(source) {
 // Called if something bad happens.
 //
 function onSuccessProfile(imageData) {
-    var image = document.getElementById('preview-profile');
-    //image.src = "data:image/jpeg;base64," + imageData;
 
-        imagemPerf = $('#preview-profile').attr("src");
+    $('#upload-demo').attr('src', imageData);
+    var resize = new Croppie($('#upload-demo'), {
+        viewport: { width: 200, height: 50 },
+        boundary: { width: 300, height: 200 },
+        showZoomer: true,
+        enableResize: true,
+        enableOrientation: true
+    });
 
-//# sourceMappingURL=ImageCropperTest.js.map
-//# sourceMappingURL=ImageCropper.js.map
+    $('#use').addClass("show");
+    $('#use').on('click', function() {
+        //console.log("upload");
+        myApp.showIndicator();
 
-        /*Tesseract.recognize(imageData, {
-            lang: "eng"
-        })
-        .progress(function(packet){
-            console.info(packet)
-            //progressUpdate(packet)
-        })
-        .then(function(data){
-            console.log(data);
-            myApp.hideIndicator();
-            $(".resulttext").html(data.text);
-            //progressUpdate({ status: 'done', data: data })
-        })
-        .catch(function(data){
-            console.log(data);
-            myApp.hideIndicator();
-        })
-        .finally(function(data){
-            console.log(data);
-            myApp.hideIndicator();
-        })*/
-
-        /*$$url = $server+"Gerar_json.php?";
-        $.ajax({
-            type: "post",
-            url: $$url,
-            data: "imagem="+imagemPerf+"&op=vendedor&action=imageImei",
-            dataType: "json",
-         success: function(data){
-            myApp.hideIndicator();
-            $(".resulttext").hrm(data);
-
-        }
-         ,error:function(data){
-            myApp.hideIndicator();
-            myApp.alert('Erro! Tente novamente.');
-         }
-        });*/
-
-    //$(".img-preview::before").css("content", "Clique para editar");
-
-}
-
-    function readURL(input) {
-      if (input.files && input.files[0]) {
-
-        $('.containeruse').html("");
-        $('.containeruse').html('<a href="#" id="use" class="button button-big button-fill button-raised color-orange">DIGITALIZAR</a>');
-        $(".img-preview").html("");
-        $(".img-preview").html('<img src="" id="upload-demo" width="400" height="300">');
-        $(".resulttext").html("");
-        $(".resulttext").removeAttr("style");
-        $('#uploadimei').removeClass("show");
-
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            $('#upload-demo').attr('src', e.target.result);
-            //if(!$('#upload-demo').hasClass("croppie-container")){
-                var resize = new Croppie($('#upload-demo')[0], {
-                    viewport: { width: 200, height: 50 },
-                    boundary: { width: 300, height: 200 },
-                    showZoomer: true,
-                    enableResize: true,
-                    enableOrientation: true
-                });
-            //}
-
-            $('#use').addClass("show");
-            $('#use').on('click', function() {
-                //console.log("upload");
-                myApp.showIndicator();
-
-                resize.result('base64').then(function(dataImg) {
-                    //var data = [{ image: dataImg }, { name: 'myimgage.jpg' }];
-                    dataImgCod = dataImg.replace('data:image/png;base64,', '');
-                    var objeto = {
-                                  "requests": [
-                                    {
-                                      "image": {
-                                        "content": dataImgCod
-                                      },
-                                      "features": [
-                                        {
-                                          "type": "TEXT_DETECTION"
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                };
-
-                    var apikey = "AIzaSyA4Lj_6YUERcnN1Vtl3CAP8d_DltJXud4M";
-                    $$url = "https://vision.googleapis.com/v1/images:annotate?key="+apikey;
-                    $.ajax({
-                        type: "post",
-                        url: $$url,
-                        data: JSON.stringify(objeto),
-                        dataType: "json",
-                        contentType: "application/json",
-                     success: function(data){
-                        myApp.hideIndicator();
-                        var imeitrue = false;
-                        var numimei = "";
-                        var dataImei = 0;
-
-                        if (data.responses[0].textAnnotations) {
-                            dataImei = data.responses[0].textAnnotations;
-                        }
-
-                        for (var i = 0; i < dataImei.length; i++) {
-                            numimei = dataImei[i].description;
-                            numimei = numimei.replace("IMEI:","");
-                            numimei = numimei.replace("MEI:","");
-                            numimei = numimei.replace("EI:","");
-                            numimei = numimei.replace("I:","");
-                            numimei = numimei.replace("IMEI","");
-                            numimei = numimei.replace("1:","");
-                            numimei = numimei.replace("2:","");
-                            numimei = numimei.replace(" ","");
-                            numimei = numimei.trim();
-                            //console.log(numimei);
-                            //console.log("numero = "+numimei+" = "+isNaN(numimei));
-                            //console.log("qtd = "+numimei.length);
-
-                            if ((!isNaN(numimei)) && (numimei.length == 15)) {
-                                $(".resulttext").attr("style","padding: 20px 0 10px;");
-                                $(".resulttext").html("IMEI = "+numimei);
-                                $('#uploadimei').addClass("show");
-                                imeitrue = true;
+        resize.result('base64').then(function(dataImg) {
+            //var data = [{ image: dataImg }, { name: 'myimgage.jpg' }];
+            dataImgCod = dataImg.replace('data:image/png;base64,', '');
+            var objeto = {
+                          "requests": [
+                            {
+                              "image": {
+                                "content": dataImgCod
+                              },
+                              "features": [
+                                {
+                                  "type": "TEXT_DETECTION"
+                                }
+                              ]
                             }
-                        }
-                        if (!imeitrue) {
-                            $(".resulttext").html("");
-                            $('#uploadimei').removeClass("show");
-                            myApp.alert('IMEI não reconhecido. Favor tentar novamente!');
-                        }
+                          ]
+                        };
 
+            var apikey = "AIzaSyA4Lj_6YUERcnN1Vtl3CAP8d_DltJXud4M";
+            $$url = "https://vision.googleapis.com/v1/images:annotate?key="+apikey;
+            $.ajax({
+                type: "post",
+                url: $$url,
+                data: JSON.stringify(objeto),
+                dataType: "json",
+                contentType: "application/json",
+             success: function(data){
+                myApp.hideIndicator();
+                var imeitrue = false;
+                var numimei = "";
+                var dataImei = 0;
+
+                if (data.responses[0].textAnnotations) {
+                    dataImei = data.responses[0].textAnnotations;
+                }
+
+                for (var i = 0; i < dataImei.length; i++) {
+                    numimei = dataImei[i].description;
+                    numimei = numimei.replace("IMEI:","");
+                    numimei = numimei.replace("MEI:","");
+                    numimei = numimei.replace("EI:","");
+                    numimei = numimei.replace("I:","");
+                    numimei = numimei.replace("IMEI","");
+                    numimei = numimei.replace("1:","");
+                    numimei = numimei.replace("2:","");
+                    numimei = numimei.replace(" ","");
+                    numimei = numimei.trim();
+                    //console.log(numimei);
+                    //console.log("numero = "+numimei+" = "+isNaN(numimei));
+                    //console.log("qtd = "+numimei.length);
+
+                    if ((!isNaN(numimei)) && (numimei.length == 15)) {
+                        $(".resulttext").attr("style","padding: 20px 0 10px;");
+                        $(".resulttext").html("IMEI = "+numimei);
+                        $('#uploadimei').addClass("show");
+                        imeitrue = true;
                     }
-                     ,error:function(data){
-                        myApp.hideIndicator();
-                        myApp.alert('Erro! Tente novamente.');
-                     }
-                    });
+                }
+                if (!imeitrue) {
+                    $(".resulttext").html("");
+                    $('#uploadimei').removeClass("show");
+                    myApp.alert('IMEI não reconhecido. Favor tentar novamente!');
+                }
 
-                  // use ajax to send data to php
-                  //$('#result').attr('src', dataImg);
-                    /*Tesseract.recognize(dataImg, {
-                        lang: "eng"
-                    })
-                    .progress(function(packet){
-                        console.info(packet)
-                        //progressUpdate(packet)
-                    })
-                    .then(function(data){
-                        console.log(data);
-                        myApp.hideIndicator();
-                        $(".resulttext").html(data.text);
-                        //progressUpdate({ status: 'done', data: data })
-                    })
-                    .catch(function(data){
-                        console.log(data);
-                        myApp.hideIndicator();
-                    })
-                    .finally(function(data){
-                        console.log(data);
-                        myApp.hideIndicator();
-                    })*/
-                })
+            }
+             ,error:function(data){
+                myApp.hideIndicator();
+                myApp.alert('Erro! Tente novamente.');
+             }
+            });
+
+          // use ajax to send data to php
+          //$('#result').attr('src', dataImg);
+            /*Tesseract.recognize(dataImg, {
+                lang: "eng"
             })
-        }
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
-
-$("#upload").change(function() {
-  readURL(this);
-});
+            .progress(function(packet){
+                console.info(packet)
+                //progressUpdate(packet)
+            })
+            .then(function(data){
+                console.log(data);
+                myApp.hideIndicator();
+                $(".resulttext").html(data.text);
+                //progressUpdate({ status: 'done', data: data })
+            })
+            .catch(function(data){
+                console.log(data);
+                myApp.hideIndicator();
+            })
+            .finally(function(data){
+                console.log(data);
+                myApp.hideIndicator();
+            })*/
+        })
+    })
+}
 
 $('#uploadimei').on('click', function() {
 
