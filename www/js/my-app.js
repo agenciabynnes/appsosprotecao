@@ -1794,7 +1794,7 @@ function cameraProfile() {
     targetWidth: 1500,
     correctOrientation: true,
     targetHeight: 1000,
-    destinationType: Camera.DestinationType.DATA_URL,
+    destinationType: Camera.DestinationType.FILE_URI,
     saveToPhotoAlbum: true
     });
 }
@@ -1807,7 +1807,7 @@ function cameraFileProfile(source) {
     allowEdit : true,
     targetWidth: 1500,
     correctOrientation: true,
-    destinationType: Camera.DestinationType.DATA_URL,
+    destinationType: Camera.DestinationType.FILE_URI,
     sourceType: Camera.PictureSourceType.PHOTOLIBRARY
     });
 }
@@ -1824,9 +1824,9 @@ function onSuccessProfile(imageData) {
         $(".resulttext").removeAttr("style");
         $('#uploadimei').removeClass("show");
 
-    var image = "data:image/jpeg;base64," + imageData;
+    //var image = "data:image/jpeg;base64," + imageData;
 
-    $('#upload-demo').attr('src', image);
+    $('#upload-demo').attr('src', imageData);
     var resize = new Croppie(document.getElementById('upload-demo'), {
         viewport: { width: 200, height: 50 },
         boundary: { width: 300, height: 200 },
