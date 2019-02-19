@@ -34,6 +34,7 @@ options = {onKeyPress: function(val, e, field, options) {
 };
 
 $(document).ready(function(){
+
   $('.phone').mask(maskBehavior, options);
   $('.cnpj').mask('00.000.000/0000-00', {reverse: true});
   $('.cpf').mask('000.000.000-00', {reverse: true});
@@ -445,7 +446,7 @@ $$('#entrar').on('click', function(){
 
                     // carrega dashboard
                     $.ajax({
-                        url: $server+"Gerar_json.php?codvendedor="+data.codvendedor+"&op=solicitacao&action=listSolicitacao",
+                        url: $server+"Gerar_json.php?idvendedor="+data.idvendedor+"&op=imei&action=listImei",
                         dataType: "json",
                         success: function(data){
                             myApp.hideIndicator();
@@ -453,14 +454,14 @@ $$('#entrar').on('click', function(){
                                 //console.log(data);
                                 var contvendas = "00";
                                 var aux = "";
-                                if (data.total[0].qtdvendas<10) {
-                                    contvendas = "0"+data.total[0].qtdvendas;
+                                if (data.total[0].qtdimei<10) {
+                                    contvendas = "0"+data.total[0].qtdimei;
                                 }else{
-                                    contvendas = data.total[0].qtdvendas;
+                                    contvendas = data.total[0].qtdimei;
                                 }
                                 //imprime no dashboard
                                 $(".contvendas").html(contvendas);
-                                $(".saldocomissao").html("R$ "+formatMoneyReal(data.total[0].totalcomissao));
+                                //$(".saldocomissao").html("R$ "+formatMoneyReal(data.total[0].totalcomissao));
 
 
                                 for (var i = 0; i < data.list.length; i++) {
@@ -470,12 +471,9 @@ $$('#entrar').on('click', function(){
                                                   '<div class="card-content">'+
                                                     '<div class="card-content-inner">'+
                                                       '<div class="row padding-card-row">'+
-                                                        '<div class="col-66">'+
-                                                          '<h4 class="no-margin titsolicitacoes">'+data.list[i].nomeservico+'</h4>'+
-                                                          '<h6 class="no-margin font-lighter nomesolicitacoes">'+convertDateTimeBrasil(data.list[i].datapagamento)+'</h6>'+
-                                                        '</div>'+
-                                                        '<div class="col-33 color-green">'+
-                                                          '<h4 class="no-margin">R$ '+formatMoneyReal(data.list[i].totalcomissao)+'</h4><h6 class="no-margin font-lighter color-indigo">R$ '+formatMoneyReal(data.list[i].valor)+'</h6>'+
+                                                        '<div class="col-100">'+
+                                                          '<h4 class="no-margin titsolicitacoes">IMEI: '+data.list[i].imei+'</h4>'+
+                                                          '<h6 class="no-margin font-lighter nomesolicitacoes">'+convertDateTimeBrasil(data.list[i].registration_date)+'</h6>'+
                                                         '</div>'+
                                                       '</div>'+
                                                     '</div>'+
@@ -732,7 +730,7 @@ function logado() {
                     console.log("vendedor");
                     // carrega dashboard
                     $.ajax({
-                        url: $server+"Gerar_json.php?codvendedor="+data[0].codvendedor+"&op=solicitacao&action=listSolicitacao",
+                        url: $server+"Gerar_json.php?idvendedor="+data[0].idvendedor+"&op=imei&action=listImei",
                         dataType: "json",
                         success: function(data){
                             myApp.hideIndicator();
@@ -740,14 +738,14 @@ function logado() {
                                 //console.log(data);
                                 var contvendas = "00";
                                 var aux = "";
-                                if (data.total[0].qtdvendas<10) {
-                                    contvendas = "0"+data.total[0].qtdvendas;
+                                if (data.total[0].qtdimei<10) {
+                                    contvendas = "0"+data.total[0].qtdimei;
                                 }else{
-                                    contvendas = data.total[0].qtdvendas;
+                                    contvendas = data.total[0].qtdimei;
                                 }
                                 //imprime no dashboard
                                 $(".contvendas").html(contvendas);
-                                $(".saldocomissao").html("R$ "+formatMoneyReal(data.total[0].totalcomissao));
+                                //$(".saldocomissao").html("R$ "+formatMoneyReal(data.total[0].totalcomissao));
 
 
                                 for (var i = 0; i < data.list.length; i++) {
@@ -757,12 +755,9 @@ function logado() {
                                                   '<div class="card-content">'+
                                                     '<div class="card-content-inner">'+
                                                       '<div class="row padding-card-row">'+
-                                                        '<div class="col-66">'+
-                                                          '<h4 class="no-margin titsolicitacoes">'+data.list[i].nomeservico+'</h4>'+
-                                                          '<h6 class="no-margin font-lighter nomesolicitacoes">'+convertDateTimeBrasil(data.list[i].datapagamento)+'</h6>'+
-                                                        '</div>'+
-                                                        '<div class="col-33 color-green">'+
-                                                          '<h4 class="no-margin">R$ '+formatMoneyReal(data.list[i].totalcomissao)+'</h4><h6 class="no-margin font-lighter color-indigo">R$ '+formatMoneyReal(data.list[i].valor)+'</h6>'+
+                                                        '<div class="col-100">'+
+                                                          '<h4 class="no-margin titsolicitacoes">IMEI: '+data.list[i].imei+'</h4>'+
+                                                          '<h6 class="no-margin font-lighter nomesolicitacoes">'+convertDateTimeBrasil(data.list[i].registration_date)+'</h6>'+
                                                         '</div>'+
                                                       '</div>'+
                                                     '</div>'+
@@ -1823,53 +1818,224 @@ function cameraFileProfile(source) {
 //
 function onSuccessProfile(imageData) {
     var image = document.getElementById('preview-profile');
-    image.src = "data:image/jpeg;base64," + imageData;
+    //image.src = "data:image/jpeg;base64," + imageData;
 
         imagemPerf = $('#preview-profile').attr("src");
-        
-        myApp.showIndicator();
 
-        $$url = $server+"Gerar_json.php?";
+//# sourceMappingURL=ImageCropperTest.js.map
+//# sourceMappingURL=ImageCropper.js.map
+
+        /*Tesseract.recognize(imageData, {
+            lang: "eng"
+        })
+        .progress(function(packet){
+            console.info(packet)
+            //progressUpdate(packet)
+        })
+        .then(function(data){
+            console.log(data);
+            myApp.hideIndicator();
+            $(".resulttext").html(data.text);
+            //progressUpdate({ status: 'done', data: data })
+        })
+        .catch(function(data){
+            console.log(data);
+            myApp.hideIndicator();
+        })
+        .finally(function(data){
+            console.log(data);
+            myApp.hideIndicator();
+        })*/
+
+        /*$$url = $server+"Gerar_json.php?";
         $.ajax({
             type: "post",
             url: $$url,
             data: "imagem="+imagemPerf+"&op=vendedor&action=imageImei",
             dataType: "json",
          success: function(data){
-            console.log(data[0]);
-            Tesseract.recognize(data, {
-                lang: "eng"
-            })
-            .progress(function(packet){
-                console.log(packet);
-                //progressUpdate(packet)
-            })
-            .then(function(data){
-                console.log(data);
-                myApp.hideIndicator();
-                $(".resulttext").html(data.text);
-                //progressUpdate({ status: 'done', data: data })
-            })
-            .catch(function(data){
-                console.log(data);
-                myApp.hideIndicator();
-            })
-            .finally(function(data){
-                console.log(data);
-                myApp.hideIndicator();
-            })
+            myApp.hideIndicator();
+            $(".resulttext").hrm(data);
 
         }
          ,error:function(data){
             myApp.hideIndicator();
-            console.log("data = "+data);
             myApp.alert('Erro! Tente novamente.');
          }
-        });
+        });*/
 
     //$(".img-preview::before").css("content", "Clique para editar");
 
 }
+
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+
+        $('.containeruse').html("");
+        $('.containeruse').html('<a href="#" id="use" class="button button-big button-fill button-raised color-orange">DIGITALIZAR</a>');
+        $(".img-preview").html("");
+        $(".img-preview").html('<img src="" id="upload-demo" width="400" height="300">');
+        $(".resulttext").html("");
+        $(".resulttext").removeAttr("style");
+        $('#uploadimei').removeClass("show");
+
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#upload-demo').attr('src', e.target.result);
+            //if(!$('#upload-demo').hasClass("croppie-container")){
+                var resize = new Croppie($('#upload-demo')[0], {
+                    viewport: { width: 200, height: 50 },
+                    boundary: { width: 300, height: 200 },
+                    showZoomer: true,
+                    enableResize: true,
+                    enableOrientation: true
+                });
+            //}
+
+            $('#use').addClass("show");
+            $('#use').on('click', function() {
+                //console.log("upload");
+                myApp.showIndicator();
+
+                resize.result('base64').then(function(dataImg) {
+                    //var data = [{ image: dataImg }, { name: 'myimgage.jpg' }];
+                    dataImgCod = dataImg.replace('data:image/png;base64,', '');
+                    var objeto = {
+                                  "requests": [
+                                    {
+                                      "image": {
+                                        "content": dataImgCod
+                                      },
+                                      "features": [
+                                        {
+                                          "type": "TEXT_DETECTION"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                };
+
+                    var apikey = "AIzaSyA4Lj_6YUERcnN1Vtl3CAP8d_DltJXud4M";
+                    $$url = "https://vision.googleapis.com/v1/images:annotate?key="+apikey;
+                    $.ajax({
+                        type: "post",
+                        url: $$url,
+                        data: JSON.stringify(objeto),
+                        dataType: "json",
+                        contentType: "application/json",
+                     success: function(data){
+                        myApp.hideIndicator();
+                        var imeitrue = false;
+                        var numimei = "";
+                        var dataImei = 0;
+
+                        if (data.responses[0].textAnnotations) {
+                            dataImei = data.responses[0].textAnnotations;
+                        }
+
+                        for (var i = 0; i < dataImei.length; i++) {
+                            numimei = dataImei[i].description;
+                            numimei = numimei.replace("IMEI:","");
+                            numimei = numimei.replace("MEI:","");
+                            numimei = numimei.replace("EI:","");
+                            numimei = numimei.replace("I:","");
+                            numimei = numimei.replace("IMEI","");
+                            numimei = numimei.replace("1:","");
+                            numimei = numimei.replace("2:","");
+                            numimei = numimei.replace(" ","");
+                            numimei = numimei.trim();
+                            //console.log(numimei);
+                            //console.log("numero = "+numimei+" = "+isNaN(numimei));
+                            //console.log("qtd = "+numimei.length);
+
+                            if ((!isNaN(numimei)) && (numimei.length == 15)) {
+                                $(".resulttext").attr("style","padding: 20px 0 10px;");
+                                $(".resulttext").html("IMEI = "+numimei);
+                                $('#uploadimei').addClass("show");
+                                imeitrue = true;
+                            }
+                        }
+                        if (!imeitrue) {
+                            $(".resulttext").html("");
+                            $('#uploadimei').removeClass("show");
+                            myApp.alert('IMEI não reconhecido. Favor tentar novamente!');
+                        }
+
+                    }
+                     ,error:function(data){
+                        myApp.hideIndicator();
+                        myApp.alert('Erro! Tente novamente.');
+                     }
+                    });
+
+                  // use ajax to send data to php
+                  //$('#result').attr('src', dataImg);
+                    /*Tesseract.recognize(dataImg, {
+                        lang: "eng"
+                    })
+                    .progress(function(packet){
+                        console.info(packet)
+                        //progressUpdate(packet)
+                    })
+                    .then(function(data){
+                        console.log(data);
+                        myApp.hideIndicator();
+                        $(".resulttext").html(data.text);
+                        //progressUpdate({ status: 'done', data: data })
+                    })
+                    .catch(function(data){
+                        console.log(data);
+                        myApp.hideIndicator();
+                    })
+                    .finally(function(data){
+                        console.log(data);
+                        myApp.hideIndicator();
+                    })*/
+                })
+            })
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+$("#upload").change(function() {
+  readURL(this);
+});
+
+$('#uploadimei').on('click', function() {
+
+        myApp.showIndicator();
+        var imagemPerf = $("#upload-demo").attr("src");
+        var imei = $(".resulttext").html();
+        imei = imei.replace("IMEI = ","");
+        $$url = $server+"Gerar_json.php?";
+        $.ajax({
+            type: "post",
+            url: $$url,
+            data: "imagem="+imagemPerf+"&imei="+imei+"&idvendedor="+localStorage.getItem("idvendedor")+"&op=imei&action=imageImei",
+            dataType: "json",
+         success: function(data){
+            myApp.hideIndicator();
+            myApp.alert('IMEI enviado com sucesso!');
+            logado();
+            $('.containeruse').html("");
+            $('.containeruse').html('<a href="#" id="use" class="button button-big button-fill button-raised color-orange">DIGITALIZAR</a>');
+            $(".img-preview").html("");
+            $(".img-preview").html('<img src="" id="upload-demo" width="400" height="300">');
+            $(".resulttext").html("");
+            $(".resulttext").removeAttr("style");
+            $('#uploadimei').removeClass("show");
+
+        }
+         ,error:function(data){
+            myApp.hideIndicator();
+            myApp.alert('Erro! Tente novamente.');
+         }
+        });
+
+});
+
+
 function onFailProfile(message) {
 //alert('Failed because: ' + message);
 }
@@ -6972,7 +7138,7 @@ function vendas(alvo){
 
     // carrega vendas
     $.ajax({
-        url: $server+"Gerar_json.php?codvendedor="+localStorage.getItem("codvendedor")+"&op=solicitacao&action=listSolicitacao",
+        url: $server+"Gerar_json.php?idvendedor="+localStorage.getItem("idvendedor")+"&op=imei&action=listImei",
         dataType: "json",
         success: function(data){
             myApp.hideIndicator();
@@ -6984,12 +7150,9 @@ function vendas(alvo){
                                   '<div class="card-content">'+
                                     '<div class="card-content-inner">'+
                                       '<div class="row padding-card-row">'+
-                                        '<div class="col-66">'+
-                                          '<h4 class="no-margin titsolicitacoes">'+data.list[i].nomeservico+'</h4>'+
-                                          '<h6 class="no-margin font-lighter nomesolicitacoes">'+convertDateTimeBrasil(data.list[i].datapagamento)+'</h6>'+
-                                        '</div>'+
-                                        '<div class="col-33 color-green">'+
-                                          '<h4 class="no-margin">R$ '+formatMoneyReal(data.list[i].totalcomissao)+'</h4><h6 class="no-margin font-lighter color-indigo">R$ '+formatMoneyReal(data.list[i].valor)+'</h6>'+
+                                        '<div class="col-100">'+
+                                          '<h4 class="no-margin titsolicitacoes">IMEI: '+data.list[i].imei+'</h4>'+
+                                          '<h6 class="no-margin font-lighter nomesolicitacoes">'+convertDateTimeBrasil(data.list[i].registration_date)+'</h6>'+
                                         '</div>'+
                                       '</div>'+
                                     '</div>'+
