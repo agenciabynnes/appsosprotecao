@@ -6,6 +6,9 @@ var myApp = new Framework7({
     tapHoldPreventClicks: true,
      // Enable Material theme
     material: true,
+    swipePanel: 'left',
+    swipePanelNoFollow: 'true',
+    swipePanelActiveArea: '80',
     swipeBackPage: false,
     fastClick: true,
     notificationCloseOnClick: true,
@@ -64,6 +67,7 @@ var tabindex = 1;
 var bannerview = 0;
 var atualizamaptime;
 var alertadechegadahometime;
+var pageassinatura = false;
 
 logado();
 
@@ -443,7 +447,7 @@ $$('#entrar').on('click', function(){
 
                     // carrega dashboard
                     $.ajax({
-                        url: $server+"Gerar_json.php?idvendedor="+data.idvendedor+"&op=imei&action=listImei",
+                        url: $server+"Gerar_json.php?idvendedor="+data.idvendedor+"&op=venda&action=listImei",
                         dataType: "json",
                         success: function(data){
                             myApp.hideIndicator();
@@ -727,7 +731,7 @@ function logado() {
                     console.log("vendedor");
                     // carrega dashboard
                     $.ajax({
-                        url: $server+"Gerar_json.php?idvendedor="+data[0].idvendedor+"&op=imei&action=listImei",
+                        url: $server+"Gerar_json.php?idvendedor="+data[0].idvendedor+"&op=venda&action=listImei",
                         dataType: "json",
                         success: function(data){
                             myApp.hideIndicator();
@@ -1784,7 +1788,17 @@ $$('.edit_profile').on('click', function(){
 
 });
 
-/////////////////////////// camera Profile //////////////////////////////
+
+
+
+
+/////////////////////////// imei caixa //////////////////////////////
+
+function nota(){
+    setTimeout(function () {
+        myApp.accordionOpen(".item-caixa");
+    }, 300);
+}
 
 function cameraProfile() {
 // Take picture using device camera and retrieve image as base64-encoded string
@@ -1822,6 +1836,7 @@ function onSuccessProfile(imageData) {
         $('#uploadimei').removeClass("show");
 
     var image = "data:image/jpeg;base64," + imageData;
+    $('#use').removeClass("disabled");
 
     $('#upload-demo').attr('src', image);
     var resize = new Croppie(document.getElementById('upload-demo'), {
@@ -1894,6 +1909,7 @@ function onSuccessProfile(imageData) {
                         $(".resulttext").html("IMEI = "+numimei);
                         $('#uploadimei').addClass("show");
                         imeitrue = true;
+                        $('#uploadimei').removeClass("disabled");
                     }
                 }
                 if (!imeitrue) {
@@ -1908,30 +1924,6 @@ function onSuccessProfile(imageData) {
                 myApp.alert('Erro! Tente novamente.');
              }
             });
-
-          // use ajax to send data to php
-          //$('#result').attr('src', dataImg);
-            /*Tesseract.recognize(dataImg, {
-                lang: "eng"
-            })
-            .progress(function(packet){
-                console.info(packet)
-                //progressUpdate(packet)
-            })
-            .then(function(data){
-                console.log(data);
-                myApp.hideIndicator();
-                $(".resulttext").html(data.text);
-                //progressUpdate({ status: 'done', data: data })
-            })
-            .catch(function(data){
-                console.log(data);
-                myApp.hideIndicator();
-            })
-            .finally(function(data){
-                console.log(data);
-                myApp.hideIndicator();
-            })*/
         })
     })
 }
@@ -1950,19 +1942,16 @@ $('#uploadimei').on('click', function() {
         $.ajax({
             type: "post",
             url: $$url,
-            data: "imagem="+imagemPerf+"&imei="+imei+"&idvendedor="+localStorage.getItem("idvendedor")+"&op=imei&action=imageImei",
+            data: "imagem="+imagemPerf+"&imei="+imei+"&idvendedor="+localStorage.getItem("idvendedor")+"&op=venda&action=imageImei",
             dataType: "json",
          success: function(data){
             myApp.hideIndicator();
+            localStorage.setItem("idimei", data);
             myApp.alert('IMEI enviado com sucesso!');
-            logado();
-            $('.containeruse').html("");
-            $('.containeruse').html('<a href="#" id="use" class="button button-big button-fill button-raised color-orange">DIGITALIZAR</a>');
-            $(".img-preview").html("");
-            $(".img-preview").html('<img src="" id="upload-demo">');
-            $(".resulttext").html("");
-            $(".resulttext").removeAttr("style");
-            $('#uploadimei').removeClass("show");
+            $('#use').addClass("disabled");
+            $('#uploadimei').addClass("disabled");
+            $('#uploadimei').html("ENVIADO");
+            myApp.accordionOpen(".item-telefone");
 
         }
          ,error:function(data){
@@ -1973,6 +1962,420 @@ $('#uploadimei').on('click', function() {
 
 });
 
+
+///////////////////////////// imei telefone ///////////////////////////
+
+function cameraTelefone() {
+// Take picture using device camera and retrieve image as base64-encoded string
+    navigator.camera.getPicture(onSuccessTelefone, onFailTelefone, {
+    quality: 80,
+    allowEdit : true,
+    targetWidth: 1500,
+    correctOrientation: true,
+    destinationType: Camera.DestinationType.DATA_URL,
+    saveToPhotoAlbum: true
+    });
+}
+
+ 
+function cameraFileTelefone(source) {
+// Retrieve image file location from specified source
+    navigator.camera.getPicture(onSuccessTelefone, onFailTelefone, {
+    quality: 80,
+    allowEdit : true,
+    targetWidth: 1500,
+    correctOrientation: true,
+    destinationType: Camera.DestinationType.DATA_URL,
+    sourceType: Camera.PictureSourceType.PHOTOLIBRARY
+    });
+}
+// Called if something bad happens.
+//
+function onSuccessTelefone(imageData) {
+    var image = document.getElementById('preview-telefone');
+    image.src = "data:image/jpeg;base64," + imageData;
+    $('#butinserirtelefone').removeClass("disabled");
+    //document.getElementById('upload-ocorrencia').value = imageData;
+}
+function onFailTelefone(message) {
+//alert('Failed because: ' + message);
+}
+
+///////////////////////////// camera telefone options ///////////////////////////
+
+/* ===== Action sheet, we use it on few pages ===== */
+myApp.onPageInit('inserirvendas', function (page) {
+    var actionOptionCameraTelefone = [
+        // First buttons group
+        [
+            // Group Label
+            {
+                text: 'Selecione uma opção',
+                label: true
+            },
+            // First button
+            {
+                text: 'Câmera',
+                onClick: function () {
+                    cameraTelefone();
+                }
+            },
+            // Second button
+            {
+                text: 'Galeria',
+                onClick: function () {
+                    cameraFileTelefone();
+                }
+            },
+        ],
+        // Second group
+        [
+            {
+                text: 'Cancel',
+                color: 'red'
+            }
+        ]
+    ];
+    $$('.optionCameraTelefone').on('click', function (e) {
+        // We need to pass additional target parameter (this) for popover
+        myApp.actions(actionOptionCameraTelefone);
+        //alert("but inserir ocorrencias");
+    });
+    
+});
+
+///////////////////////////// acao inserir telefone ///////////////////////////
+
+$('#butinserirtelefone').on('click', function(){
+    //alert("enviar");
+    if ($("#preview-telefone").attr("src")){
+        enviartelefone();
+    }else{
+        myApp.alert("Opps! Favor tirar uma foto do IMEI do telefone.");
+    }
+});
+
+///////////////////////////// inserir telefone ///////////////////////////
+function enviartelefone()
+{
+        myApp.showIndicator();
+        var imagemPerf = $("#preview-telefone").attr("src");
+        $$url = $server+"Gerar_json.php?";
+        $.ajax({
+            type: "post",
+            url: $$url,
+            data: "imagem="+imagemPerf+"&idimei="+localStorage.getItem("idimei")+"&idvendedor="+localStorage.getItem("idvendedor")+"&op=venda&action=imageTelefone",
+            dataType: "json",
+         success: function(data){
+            myApp.hideIndicator();
+            myApp.alert('Foto do IMEI enviada com sucesso!');
+            $('#butinserirtelefone').addClass("disabled");
+            $('#butinserirtelefone').html("ENVIADO");
+            myApp.accordionOpen(".item-nota");
+        }
+         ,error:function(data){
+            myApp.hideIndicator();
+            myApp.alert('Erro! Tente novamente.');
+         }
+        });
+}
+
+
+///////////////////////////// nota fiscal ///////////////////////////
+
+function cameraNota() {
+// Take picture using device camera and retrieve image as base64-encoded string
+    navigator.camera.getPicture(onSuccessNota, onFailNota, {
+    quality: 80,
+    allowEdit : true,
+    targetWidth: 1500,
+    correctOrientation: true,
+    destinationType: Camera.DestinationType.DATA_URL,
+    saveToPhotoAlbum: true
+    });
+}
+
+ 
+function cameraFileNota(source) {
+// Retrieve image file location from specified source
+    navigator.camera.getPicture(onSuccessNota, onFailNota, {
+    quality: 80,
+    allowEdit : true,
+    targetWidth: 1500,
+    correctOrientation: true,
+    destinationType: Camera.DestinationType.DATA_URL,
+    sourceType: Camera.PictureSourceType.PHOTOLIBRARY
+    });
+}
+// Called if something bad happens.
+//
+function onSuccessNota(imageData) {
+    var image = document.getElementById('preview-nota');
+    image.src = "data:image/jpeg;base64," + imageData;
+    $('#butinserirnota').removeClass("disabled");
+    //document.getElementById('upload-ocorrencia').value = imageData;
+}
+function onFailNota(message) {
+//alert('Failed because: ' + message);
+}
+
+///////////////////////////// camera nota options ///////////////////////////
+
+/* ===== Action sheet, we use it on few pages ===== */
+myApp.onPageInit('inserirvendas', function (page) {
+    var actionOptionCameraNota = [
+        // First buttons group
+        [
+            // Group Label
+            {
+                text: 'Selecione uma opção',
+                label: true
+            },
+            // First button
+            {
+                text: 'Câmera',
+                onClick: function () {
+                    cameraNota();
+                }
+            },
+            // Second button
+            {
+                text: 'Galeria',
+                onClick: function () {
+                    cameraFileNota();
+                }
+            },
+        ],
+        // Second group
+        [
+            {
+                text: 'Cancel',
+                color: 'red'
+            }
+        ]
+    ];
+    $$('.optionCameraNota').on('click', function (e) {
+        // We need to pass additional target parameter (this) for popover
+        myApp.actions(actionOptionCameraNota);
+        //alert("but inserir ocorrencias");
+    });
+    
+});
+
+///////////////////////////// acao inserir nota ///////////////////////////
+
+$('#butinserirnota').on('click', function(){
+    //alert("enviar");
+    if ($("#preview-nota").attr("src")){
+        enviarnota();
+    }else{
+        myApp.alert("Opps! Favor tirar uma foto.");
+    }
+});
+
+///////////////////////////// inserir nota ///////////////////////////
+function enviarnota()
+{
+        myApp.showIndicator();
+        var imagemPerf = $("#preview-nota").attr("src");
+        $$url = $server+"Gerar_json.php?";
+        $.ajax({
+            type: "post",
+            url: $$url,
+            data: "imagem="+imagemPerf+"&idimei="+localStorage.getItem("idimei")+"&idvendedor="+localStorage.getItem("idvendedor")+"&op=venda&action=imageNota",
+            dataType: "json",
+         success: function(data){
+            myApp.hideIndicator();
+            myApp.alert('Foto da nota fiscal enviada com sucesso!');
+            $('#butinserirnota').addClass("disabled");
+            $('#butinserirnota').html("ENVIADO");
+            myApp.accordionOpen(".item-nota");
+
+        }
+         ,error:function(data){
+            myApp.hideIndicator();
+            myApp.alert('Erro! Tente novamente.');
+         }
+        });
+}
+
+
+///////////////////////////////////// assinatura /////////////////////////////
+function assinatura() {
+
+    var orientation = screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).type;
+
+    if (orientation === "landscape-primary" || orientation === "landscape-secondary") {
+
+
+
+        console.log("assinatura()");
+        var wrapper = document.getElementById("signature-pad");
+        var clearButton = wrapper.querySelector("[data-action=clear]");
+        var changeColorButton = wrapper.querySelector("[data-action=change-color]");
+        var undoButton = wrapper.querySelector("[data-action=undo]");
+        var savePNGButton = wrapper.querySelector("[data-action=save-png]");
+        var saveJPGButton = wrapper.querySelector("[data-action=save-jpg]");
+        var saveSVGButton = wrapper.querySelector("[data-action=save-svg]");
+        var canvas = wrapper.querySelector("canvas");
+        var signaturePad = new SignaturePad(canvas, {
+          // It's Necessary to use an opaque color when saving image as JPEG;
+          // this option can be omitted if only saving as PNG or SVG
+          backgroundColor: 'rgb(255, 255, 255)'
+        });
+
+        // Adjust canvas coordinate space taking into account pixel ratio,
+        // to make it look crisp on mobile devices.
+        // This also causes canvas to be cleared.
+        function resizeCanvas() {
+          // When zoomed out to less than 100%, for some very strange reason,
+          // some browsers report devicePixelRatio as less than 1
+          // and only part of the canvas is cleared then.
+          var ratio =  Math.max(window.devicePixelRatio || 1, 1);
+
+          // This part causes the canvas to be cleared
+          canvas.width = canvas.offsetWidth * ratio;
+          canvas.height = canvas.offsetHeight * ratio;
+          canvas.getContext("2d").scale(ratio, ratio);
+
+          // This library does not listen for canvas changes, so after the canvas is automatically
+          // cleared by the browser, SignaturePad#isEmpty might still return false, even though the
+          // canvas looks empty, because the internal data of this library wasn't cleared. To make sure
+          // that the state of this library is consistent with visual state of the canvas, you
+          // have to clear it manually.
+          signaturePad.clear();
+        }
+
+        // On mobile devices it might make more sense to listen to orientation change,
+        // rather than window resize events.
+        window.onresize = resizeCanvas;
+        resizeCanvas();
+
+        /*function download(dataURL, filename) {
+          if (navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") === -1) {
+            window.open(dataURL);
+          } else {
+            var blob = dataURLToBlob(dataURL);
+            var url = window.URL.createObjectURL(blob);
+
+            var a = document.createElement("a");
+            a.style = "display: none";
+            a.href = url;
+            a.download = filename;
+
+            document.body.appendChild(a);
+            a.click();
+
+            window.URL.revokeObjectURL(url);
+          }
+        }*/
+
+        // One could simply use Canvas#toBlob method instead, but it's just to show
+        // that it can be done using result of SignaturePad#toDataURL.
+        function dataURLToBlob(dataURL) {
+          // Code taken from https://github.com/ebidel/filer.js
+          var parts = dataURL.split(';base64,');
+          var contentType = parts[0].split(":")[1];
+          var raw = window.atob(parts[1]);
+          var rawLength = raw.length;
+          var uInt8Array = new Uint8Array(rawLength);
+
+          for (var i = 0; i < rawLength; ++i) {
+            uInt8Array[i] = raw.charCodeAt(i);
+          }
+
+          return new Blob([uInt8Array], { type: contentType });
+        }
+
+        clearButton.addEventListener("click", function (event) {
+          signaturePad.clear();
+        });
+
+        /*undoButton.addEventListener("click", function (event) {
+          var data = signaturePad.toData();
+
+          if (data) {
+            data.pop(); // remove the last dot or line
+            signaturePad.fromData(data);
+          }
+        });
+
+        changeColorButton.addEventListener("click", function (event) {
+          var r = Math.round(Math.random() * 255);
+          var g = Math.round(Math.random() * 255);
+          var b = Math.round(Math.random() * 255);
+          var color = "rgb(" + r + "," + g + "," + b +")";
+
+          signaturePad.penColor = color;
+        });
+
+        savePNGButton.addEventListener("click", function (event) {
+          if (signaturePad.isEmpty()) {
+            alert("Please provide a signature first.");
+          } else {
+            var dataURL = signaturePad.toDataURL();
+            download(dataURL, "signature.png");
+          }
+        });*/
+
+        saveJPGButton.addEventListener("click", function (event) {
+            console.log("saveJPGButton");
+          if (signaturePad.isEmpty()) {
+            myApp.alert('Assinatura em branco. Favor tentar novamente!');
+
+          } else {
+            var dataURL = signaturePad.toDataURL("image/jpeg");
+            /*download(dataURL, "signature.jpg");*/
+            enviarassinatura(dataURL);
+          }
+        });
+
+        /*saveSVGButton.addEventListener("click", function (event) {
+          if (signaturePad.isEmpty()) {
+            alert("Please provide a signature first.");
+          } else {
+            var dataURL = signaturePad.toDataURL('image/svg+xml');
+            download(dataURL, "signature.svg");
+          }
+        });*/
+
+
+    } else if (orientation === "portrait-secondary" || orientation === "portrait-primary") {
+        console.log("Mmmh... you should rotate your device to landscape");
+        $(".rotationpage").show();
+        pageassinatura = true;
+    }
+}
+window.addEventListener("orientationchange", function() {
+    if (screen.orientation.angle==90 && pageassinatura==true) {
+        $(".rotationpage").hide();
+        assinatura();
+    }else if(pageassinatura==true){
+        $(".rotationpage").show();
+    }
+});
+///////////////////////////// inserir assinatura ///////////////////////////
+function enviarassinatura(dataURL)
+{
+        myApp.showIndicator();
+        var imagemPerf = dataURL;
+        $$url = $server+"Gerar_json.php?";
+        $.ajax({
+            type: "post",
+            url: $$url,
+            data: "imagem="+imagemPerf+"&idimei="+localStorage.getItem("idimei")+"&idvendedor="+localStorage.getItem("idvendedor")+"&op=venda&action=imageAssinatura",
+            dataType: "json",
+         success: function(data){
+            myApp.hideIndicator();
+            myApp.alert('Processo concluído com sucesso!', function () { window.location = "index.html";});
+
+        }
+         ,error:function(data){
+            myApp.hideIndicator();
+            myApp.alert('Erro! Tente novamente.');
+         }
+        });
+}
 
 //////////////////////// camera morador options ////////////////////////
 
@@ -2137,6 +2540,7 @@ if (indexofImage!="-1") {
         });
 
 }
+
 
 
 ///////////////////////////////////// Popup Banner ///////////////////////////
@@ -11540,7 +11944,8 @@ function limpar()
 
             var push = PushNotification.init({
                 android: {
-                    senderID: "752219688397"
+                    senderID: "752219688397",
+                    icon: 'icon-notification'
                 },
                 ios: {
                     senderID: "752219688397",

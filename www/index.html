@@ -90,18 +90,8 @@
             </div>
 
             <div class="page-content pageindex tablet">
-              <div class="content-block-title no-padding">DIGITALIZAR IMEI</div>
-              <div class="content-block no-padding" style="margin: 0 8px">
-                <div class="item-input">
-                    <div id="upload" class="optionCameraProfile custom-file-input"></div>
-                    <div class="img-preview">
-                      <img src="" id="upload-demo">
-                    </div>
-                </div>
-                      <div class="list-block no-margin-auto padding-top10 containeruse"><a href="#" id="use" class="button button-big button-fill button-raised color-orange">DIGITALIZAR</a></div>
-                      <div class="resulttext"></div>
-                      <div class="list-block no-margin-auto padding-top10"><a href="#" id="uploadimei" class="button button-big button-fill button-raised color-green" style="margin-bottom: 20px;">ENVIAR</a></div>
-
+              <div class="content-block" style="margin: 10px;">
+                <a href="#inserirvendas" onclick="nota()" class="button button-big button-fill button-raised color-green">CADASTRAR VENDAS</a>
               </div>
               <div class="content-block">
                 <div class="row">
@@ -122,8 +112,8 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>-->
+                  </div>-->
+                </div>
               </div>
               <div class="content-block-title no-padding">ÚLTIMAS VENDAS</div>
               <div class="content-card listsolicitacoes"></div>
@@ -131,6 +121,127 @@
               <div class="content-block-title no-padding">ÚLTIMAS MENSAGENS</div>
               <div class="list-block media-list">
                 <ul class="listmensagens"></ul>
+              </div>
+            </div>
+
+            <!-- inserir vendas -->
+            <div data-page="inserirvendas" class="page cached">
+
+              <div class="navbar">
+                <div class="navbar-inner">
+                  <div class="left"><a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a></div>
+                    <div class="center">VENDAS</div>
+                    <div class="right"><a href="#" class="back link icon-only"><i class="icon icon-back"></i></a></div>
+                    <div class="right no-margin"><a href="#index" class="link icon-only"><i class="icon fa fa-home"></i></a></div>
+                </div>
+              </div>
+
+              <div class="page-content">
+                <div class="content-block">
+                  <div class="list-block accordion-list">
+                    <ul>
+                      <li class="accordion-item item-caixa">
+                        <a href="#" class="item-content item-link">
+                          <div class="item-inner">
+                            <div class="item-title">1 - IMEI CAIXA</div>
+                          </div>
+                        </a>
+                        <div class="accordion-item-content">
+                          <div class="content-block">
+                            <div class="content-block-text">Tire uma foto do número do IMEI, na caixa do celular, e clique em DIGITALIZAR. Após o IMEI ser reconhecido é só clicar em ENVIAR.</div>
+                            <div class="content-block no-padding" style="margin: 0 8px">
+                              <div class="item-input">
+                                  <div id="upload" class="optionCameraProfile custom-file-input"></div>
+                                  <div class="img-preview">
+                                    <img src="" id="upload-demo">
+                                  </div>
+                              </div>
+                              <div class="list-block no-margin-auto padding-top10 containeruse">
+                                <a href="#" id="use" class="disabled button button-big button-fill button-raised color-orange">DIGITALIZAR</a>
+                              </div>
+                              <div class="resulttext"></div>
+                              <div class="list-block no-margin-auto padding-top10">
+                                <a href="#" id="uploadimei" class="disabled button button-big button-fill button-raised color-green" style="margin-bottom: 20px;">ENVIAR</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li class="accordion-item item-telefone">
+                        <a href="#" class="item-content item-link">
+                          <div class="item-inner">
+                            <div class="item-title">2 - IMEI TELEFONE</div>
+                          </div>
+                        </a>
+                        <div class="accordion-item-content">
+                          <div class="content-block">
+                            <div class="content-block-text">Tire uma foto (legível) da Tela do Celular, com o número do IMEI (é só digitar *#06# no celular e apertar a tecla para ligar), depois é só clicar em ENVIAR.</div>
+                            <div class="item-content">
+                              <div class="item-inner">
+                                <div class="item-input">
+                                  <div id="imagem-telefone" class="optionCameraTelefone custom-file-input"></div>
+                                    <div class="img-preview">
+                                      <img src="" id="preview-telefone" width="100" height="80">
+                                    </div>
+                                </div>
+                                <p class="buttons-row">
+                                  <a href="#" id="butinserirtelefone" class="disabled button button-big button-fill button-raised color-green">ENVIAR</a>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li class="accordion-item item-nota">
+                        <a href="#" class="item-content item-link">
+                          <div class="item-inner">
+                            <div class="item-title">3 - NOTA FISCAL</div>
+                          </div>
+                        </a>
+                        <div class="accordion-item-content">
+                          <div class="content-block">
+                            <div class="content-block-text">Tire uma foto (legível) da Nota Fiscal, depois é só clicar em ENVIAR.</div>
+                            <div class="item-content">
+                              <div class="item-inner">
+                                <div class="item-input">
+                                  <div id="imagem-nota" class="optionCameraNota custom-file-input"></div>
+                                    <div class="img-preview">
+                                      <img src="" id="preview-nota" width="100" height="80">
+                                    </div>
+                                </div>
+                                <p class="buttons-row">
+                                  <a href="#" id="butinserirnota" class="disabled button button-big button-fill button-raised color-green">ENVIAR</a>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li class="accordion-item item-assinatura">
+                        <a href="#" class="item-content item-link">
+                          <div class="item-inner">
+                            <div class="item-title">4 - ASSINATURA</div>
+                          </div>
+                        </a>
+                        <div class="accordion-item-content">
+                          <div class="content-block">
+                            <div class="content-block-text">Peça ao cliente que assine, o termo de uso, na tela do seu celular, após é só clicar em enviar.</div>
+                            <div class="item-content">
+                              <div class="item-inner">
+                                <p class="buttons-row">
+                                  <a href="#" onClick="myApp.popup('.popup-assinatura'),assinatura()" class="button button-big button-fill button-raised color-indigo" style="margin-bottom: 20px;">SOLICITAR ASSINATURA</a>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -3223,12 +3334,51 @@
         </div>
       </div>
     </div>
+
+    <!-- assinatura -->
+    <div class="popup popup-assinatura tablet-fullscreen">
+      <div class="rotationpage overlay">
+        <div class="iconContainer">
+          <div class="phone"><i class="fa fa-undo"></i></div>
+          <p>Gire seu celular!</p>
+        </div>
+      </div>
+      <div class="view">
+        <div class="page">
+          <a href="#" class="close-popup floating-top color-white bg-red">
+            <i class="fa fa-times"></i>
+          </a>
+          <div class="page-content login-screen-content page-login">
+            <div id="signature-pad" class="signature-pad">
+              <div class="signature-pad--body">
+                <canvas></canvas>
+              </div>
+              <div class="signature-pad--footer">
+                <div class="content-block">
+                  <div class="row">
+                    <div class="col-50">
+                      <a href="#" data-action="clear" class="button button-big button-fill button-raised color-orange">LIMPAR</a>
+                    </div>
+                    <div class="col-50">
+                      <a href="#" data-action="save-jpg" class="button button-big button-fill button-raised color-green">SALVAR</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!--<script src="https://rawgit.com/muaz-khan/RTCMultiConnection/master/dist/RTCMultiConnection.min.js"></script>
     <script src="https://www.webrtc-experiment.com/getMediaElement-v1.2.js"> </script>
     <script src="js/SSEConnection.js"></script>-->
+    <script type="text/javascript" src="js/signature_pad.umd.js"></script>
     <script type="text/javascript" src="js/my-app.js"></script>
-    <script type="text/javascript" src="js/tesseract.min.js"></script>
-    <script type="text/javascript" src="js/caman.full.min.js"></script>
+    <!--<script type="text/javascript" src="js/tesseract.min.js"></script>
+    <script type="text/javascript" src="js/caman.full.min.js"></script>-->
+
+    
     <!--<script src='https://cdn.jsdelivr.net/gh/naptha/tesseract.js@v1.0.14/dist/tesseract.min.js'></script>-->
     <!-- API JS Pagseguro - In production remove sandbox -->
     <!--<script type="text/javascript" src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>-->

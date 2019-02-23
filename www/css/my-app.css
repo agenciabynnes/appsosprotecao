@@ -61,9 +61,191 @@ h6, .h6 {
     font-weight: bold;
 }
 /* digitalizar */
-#use, #uploadimei{
+
+/* cadastrar vendas */
+.accordion-item>a{
+	border-bottom: solid 1px #f1f1f1;
+}
+.accordion-item .accordion-item-content{
+	border-bottom: solid 1px #f1f1f1;
+}
+.content-block-text{
+    padding: 15px;
+    font-size: 12px;
+    text-align: justify;
+}
+
+/* assinatura */
+.rotationpage{
 	display: none;
 }
+.signature-pad {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  font-size: 10px;
+  width: 100%;
+  height: 100%;
+  max-width: 700px;
+  max-height: 460px;
+  background-color: #fff;
+}
+
+.signature-pad::before,
+.signature-pad::after {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  width: 40%;
+  height: 10px;
+  bottom: 10px;
+  background: transparent;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+}
+
+.signature-pad::before {
+  left: 20px;
+  -webkit-transform: skew(-3deg) rotate(-3deg);
+          transform: skew(-3deg) rotate(-3deg);
+}
+
+.signature-pad::after {
+  right: 20px;
+  -webkit-transform: skew(3deg) rotate(3deg);
+          transform: skew(3deg) rotate(3deg);
+}
+
+.signature-pad--body {
+  position: relative;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  border: 1px solid #f4f4f4;
+}
+
+.signature-pad--body
+canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.02) inset;
+}
+
+.signature-pad--footer {
+  color: #C3C3C3;
+  text-align: center;
+  font-size: 1.2em;
+  padding: 0 10px;
+}
+
+.signature-pad--actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-top: 8px;
+}
+
+
+/* animacao rotate */
+.overlay{
+	display:none;
+	position:absolute;
+	top:0;
+	background-color:rgba(0,0,0,.8);
+	width:100%;
+	height:100%;
+	z-index: 9999;
+}
+
+.iconContainer{
+	width:200px;
+	height:200px;
+	position:absolute;
+	left:50%;
+	top:50%;
+	margin-left:-100px;
+	margin-top:-100px;
+}
+.iconContainer p{
+		display:inline-block;
+		width:100%;
+		text-align:center;
+		margin:0;
+		font-size:20px;
+		opacity:0;
+}
+
+.phone{
+	position:relative;
+	left:50%;
+	margin-left:-50px;
+	width:0;
+	height:0;
+	border:0 solid #000;
+	background: white;
+	border-radius:10px;
+	box-sizing:border-box;
+}
+.phone i{
+		text-align:center;
+		width:100%;
+		line-height:120px;
+		font-size:50px;
+		color:#454545;
+		opacity:0;
+}
+
+.overlay{	display:block; }
+
+.overlay .phone{
+	animation: sizeIncrease .5s forwards ease, borderIncrease .5s .5s forwards ease, rotateLeft .7s 1s forwards ease;
+}
+
+.overlay .phone i{
+	animation: fadeIn .5s .8s forwards ease;
+}
+
+.overlay .iconContainer p{
+	animation: fadeIn .5s 1.3s forwards ease;
+	text-align: center;
+    font-size: 20px;
+    color: white;
+}
+
+/* KEYFRAMES
+------------------------------------------- */
+/* Animate width + height */
+@keyframes sizeIncrease {
+  0%   { width: 0; height:10px; }
+	50%  { width: 100px; height: 10px; }
+  100% { width: 100px; height:160px; }
+}
+/* Add borders */
+@keyframes borderIncrease { 
+	100% { border-width:20px 10px; } 
+}
+
+/* fade-in  */
+@keyframes fadeIn { 
+	100% { opacity:1; } 
+}
+
+/* Rotate device */
+@keyframes rotateLeft { 
+	100% { transform: rotate(-90deg); } 
+}
+
 /* enquete */
 #enquetes-cont li a .item-media{
 	margin: 10px 0 10px;

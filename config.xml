@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android" android-versionCode="3" ios-CFBundleVersion="0.0.3" version="0.0.3" id="com.sosprotecao.android">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android" android-versionCode="4" ios-CFBundleVersion="0.0.4" version="0.0.4" id="com.sosprotecao.android">
 <!--
 id="com.aptohome.ios"
 id="com.aptohome.android.crosswalk"
@@ -34,16 +34,16 @@ id="com.aptohome.android.crosswalk"
     <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Usamos a galeria para envio de fotos do IMEI" />
 </plugin>
 <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-    <string>Usamos a câmera para tirar fotos nas aberturas de ocorrências</string>
+    <string>Usamos a câmera para tirar fotos dos documentos da venda</string>
 </edit-config>
 <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
-    <string>Usamos a câmera para tirar fotos nas aberturas de ocorrências</string>
+    <string>Usamos a câmera para tirar fotos dos documentos da venda</string>
 </edit-config>
 <!--<config-file platform="ios" parent="NSPhotoLibraryUsageDescription" mode="merge">  
       <string>Usamos a galeria para envio de fotos nas aberturas de ocorrências</string> 
 </config-file>-->
 <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
-    <string>Precisamos de acesso a galeria para salvar as fotos de aberturas de ocorrências</string>
+    <string>Precisamos de acesso a galeria para salvar as fotos dos documentos da venda</string>
 </edit-config>
 
 <plugin name="phonegap-plugin-push" spec="1.11.1">
