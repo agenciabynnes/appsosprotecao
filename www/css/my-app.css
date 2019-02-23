@@ -660,18 +660,18 @@ textarea {
 	position: absolute;
 	z-index: 9999999;
 }
-.img-preview{
+.img-preview, .img-preview-caixa, .img-preview-telefone, .img-preview-nota{
 	width: 99%;
 	overflow: hidden;
 	min-height: 50px;
 	border: 1px dashed #ccc;
 }
-.img-preview img{
+.img-preview img, .img-preview-caixa img, .img-preview-telefone img, .img-preview-nota img{
 	border: none!important;
 	width: 100%;
 	height: auto;
 	}
-.img-preview::before {
+.img-preview::before, .img-preview-caixa::before, .img-preview-telefone::before, .img-preview-nota::before{	
 	content: 'Clique para tirar a foto';
     font-size: 10pt;
     cursor: pointer;
