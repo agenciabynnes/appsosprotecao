@@ -1826,14 +1826,13 @@ function cameraFileProfile(source) {
 //
 function onSuccessProfile(imageData) {
 
-
-        $('.containeruse').html("");
-        $('.containeruse').html('<a href="#" id="use" class="button button-big button-fill button-raised color-orange">DIGITALIZAR</a>');
-        $(".img-preview").html("");
-        $(".img-preview").html('<img src="" id="upload-demo">');
-        $(".resulttext").html("");
-        $(".resulttext").removeAttr("style");
-        $('#uploadimei').removeClass("show");
+console.log(imageData);
+    $('.containeruse').html("");
+    $('.containeruse').html('<a href="#" id="use" class="button button-big button-fill button-raised color-orange">DIGITALIZAR</a>');
+    $(".img-preview").html("");
+    $(".img-preview").html('<img src="" id="upload-demo">');
+    $(".resulttext").html("");
+    $(".resulttext").removeAttr("style");
 
     var image = "data:image/jpeg;base64," + imageData;
     $('#use').removeClass("disabled");
@@ -1847,7 +1846,7 @@ function onSuccessProfile(imageData) {
         enableOrientation: true
     });
 
-    $('#use').addClass("show");
+    //$('#use').addClass("show");
     $('#use').on('click', function() {
         //console.log("upload");
         myApp.showIndicator();
@@ -1929,7 +1928,7 @@ function onSuccessProfile(imageData) {
 }
 
 function onFailProfile(message) {
-//alert('Failed because: ' + message);
+    console.log("erro = "+message);
 }
 
 $('#uploadimei').on('click', function() {
@@ -1998,7 +1997,7 @@ function onSuccessTelefone(imageData) {
     //document.getElementById('upload-ocorrencia').value = imageData;
 }
 function onFailTelefone(message) {
-//alert('Failed because: ' + message);
+console.log("erro = "+message);
 }
 
 ///////////////////////////// camera telefone options ///////////////////////////
