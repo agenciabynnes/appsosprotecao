@@ -1794,7 +1794,7 @@ $$('.edit_profile').on('click', function(){
 
 /////////////////////////// imei caixa //////////////////////////////
 
-function nota(){
+function caixa(){
     setTimeout(function () {
         myApp.accordionOpen(".item-caixa");
     }, 300);
@@ -1804,6 +1804,7 @@ function cameraProfile() {
 // Take picture using device camera and retrieve image as base64-encoded string
     navigator.camera.getPicture(onSuccessProfile, onFailProfile, {
     quality: 80,
+    allowEdit : true,
     targetWidth: 1500,
     correctOrientation: true,
     destinationType: Camera.DestinationType.DATA_URL,
@@ -1816,14 +1817,59 @@ function cameraFileProfile(source) {
 // Retrieve image file location from specified source
     navigator.camera.getPicture(onSuccessProfile, onFailProfile, {
     quality: 80,
+    allowEdit : true,
     targetWidth: 1500,
     correctOrientation: true,
     destinationType: Camera.DestinationType.DATA_URL,
     sourceType: Camera.PictureSourceType.PHOTOLIBRARY
     });
+
 }
-// Called if something bad happens.
-//
+
+
+//////////////////////// camera morador options ////////////////////////
+
+/* ===== Action sheet, we use it on few pages ===== */
+myApp.onPageInit('inserirvendas', function (page) {
+    var actionOptionCameraProfile = [
+        // First buttons group
+        [
+            // Group Label
+            {
+                text: 'Selecione uma opção',
+                label: true
+            },
+            // First button
+            {
+                text: 'Câmera',
+                onClick: function () {
+                    cameraProfile();
+                }
+            },
+            // Second button
+            {
+                text: 'Galeria',
+                onClick: function () {
+                    cameraFileProfile();
+                }
+            },
+        ],
+        // Second group
+        [
+            {
+                text: 'Cancel',
+                color: 'red'
+            }
+        ]
+    ];
+    $$('.optionCameraProfile').on('click', function (e) {
+        // We need to pass additional target parameter (this) for popover
+        myApp.actions(actionOptionCameraProfile);
+        //alert("but edit Profile");
+    });
+});
+
+
 function onSuccessProfile(imageData) {
 
 console.log(imageData);
@@ -1835,8 +1881,11 @@ console.log(imageData);
     $(".resulttext").removeAttr("style");
 
     var image = "data:image/png;base64," + imageData;
-
+    
+    console.log(image);
+    
     $('#upload-demo').attr('src', image);
+    $(".profile_foto img").attr("src",image);
     $('#use').removeClass("disabled");
 
     var resize = new Croppie(document.getElementById('upload-demo'), {
@@ -1853,7 +1902,7 @@ console.log(imageData);
         myApp.showIndicator();
 
         resize.result('base64').then(function(imageData) {
-            console.log(dataImg);
+            console.log(imageData);
             //var data = [{ image: dataImg }, { name: 'myimgage.jpg' }];
             dataImgCod = imageData.replace('data:image/png;base64,', '');
             var objeto = {
@@ -2376,46 +2425,6 @@ function enviarassinatura(dataURL)
          }
         });
 }
-
-//////////////////////// camera morador options ////////////////////////
-
-/* ===== Action sheet, we use it on few pages ===== */
-    var actionOptionCameraProfile = [
-        // First buttons group
-        [
-            // Group Label
-            {
-                text: 'Selecione uma opção',
-                label: true
-            },
-            // First button
-            {
-                text: 'Câmera',
-                onClick: function () {
-                    cameraProfile();
-                }
-            },
-            // Second button
-            {
-                text: 'Galeria',
-                onClick: function () {
-                    cameraFileProfile();
-                }
-            },
-        ],
-        // Second group
-        [
-            {
-                text: 'Cancel',
-                color: 'red'
-            }
-        ]
-    ];
-    $$('.optionCameraProfile').on('click', function (e) {
-        // We need to pass additional target parameter (this) for popover
-        myApp.actions(actionOptionCameraProfile);
-        //alert("but edit Profile");
-    });
 
 /////////////////////////// acao editar Profile ////////////////////////
 
