@@ -1873,10 +1873,10 @@ myApp.onPageInit('inserirvendas', function (page) {
 function onSuccessProfile(imageData) {
 
 console.log(imageData);
-    $('.containeruse').html("");
+    /*$('.containeruse').html("");
     $('.containeruse').html('<a href="#" id="use" class="button button-big button-fill button-raised color-orange">DIGITALIZAR</a>');
     $(".img-preview").html("");
-    $(".img-preview").html('<img src="" id="upload-demo">');
+    $(".img-preview").html('<img src="" id="upload-demo">');*/
     $(".resulttext").html("");
     $(".resulttext").removeAttr("style");
 
@@ -1885,7 +1885,7 @@ console.log(imageData);
     console.log(image);
     
     $('#upload-demo').attr('src', image);
-    $(".profile_foto img").attr("src",image);
+    //$(".profile_foto img").attr("src",image);
     $('#use').removeClass("disabled");
 
     var resize = new Croppie(document.getElementById('upload-demo'), {
