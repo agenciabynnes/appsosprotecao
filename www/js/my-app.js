@@ -2000,6 +2000,7 @@ $('#uploadimei').on('click', function() {
             $('#use').addClass("disabled");
             $('#uploadimei').addClass("disabled");
             $('#uploadimei').html("ENVIADO");
+            $('.item-telefone').addClass("disabled");
             myApp.accordionOpen(".item-telefone");
 
         }
@@ -2120,6 +2121,7 @@ function enviartelefone()
             myApp.alert('Foto do IMEI enviada com sucesso!');
             $('#butinserirtelefone').addClass("disabled");
             $('#butinserirtelefone').html("ENVIADO");
+            $('.item-nota').addClass("disabled");
             myApp.accordionOpen(".item-nota");
         }
          ,error:function(data){
@@ -2238,7 +2240,8 @@ function enviarnota()
             myApp.alert('Foto da nota fiscal enviada com sucesso!');
             $('#butinserirnota').addClass("disabled");
             $('#butinserirnota').html("ENVIADO");
-            myApp.accordionOpen(".item-nota");
+            $('.item-assinatura').addClass("disabled");
+            myApp.accordionOpen(".item-assinatura");
 
         }
          ,error:function(data){
