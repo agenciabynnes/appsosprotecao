@@ -6,9 +6,6 @@ var myApp = new Framework7({
     tapHoldPreventClicks: true,
      // Enable Material theme
     material: true,
-    swipePanel: 'left',
-    swipePanelNoFollow: 'true',
-    swipePanelActiveArea: '80',
     swipeBackPage: false,
     fastClick: true,
     notificationCloseOnClick: true,
@@ -1880,7 +1877,7 @@ console.log(imageData);
     $(".resulttext").html("");
     $(".resulttext").removeAttr("style");
 
-    var image = "data:image/png;base64," + imageData;
+    var image = "data:image/jpeg;base64," + imageData;
     
     console.log(image);
     
@@ -1999,6 +1996,7 @@ $('#uploadimei').on('click', function() {
             myApp.alert('IMEI enviado com sucesso!');
             $('#use').addClass("disabled");
             $('#uploadimei').addClass("disabled");
+            $('.optionCameraProfile').addClass("disabled");            
             $('#uploadimei').html("ENVIADO");
             $('.item-telefone').removeClass("disabled");
             myApp.accordionOpen(".item-telefone");
@@ -2118,8 +2116,9 @@ function enviartelefone()
             dataType: "json",
          success: function(data){
             myApp.hideIndicator();
-            myApp.alert('Foto do IMEI enviada com sucesso!');
+            myApp.alert('Foto do celular com IMEI enviada com sucesso!');
             $('#butinserirtelefone').addClass("disabled");
+            $('.optionCameraTelefone').addClass("disabled");
             $('#butinserirtelefone').html("ENVIADO");
             $('.item-nota').removeClass("disabled");
             myApp.accordionOpen(".item-nota");
@@ -2239,6 +2238,7 @@ function enviarnota()
             myApp.hideIndicator();
             myApp.alert('Foto da nota fiscal enviada com sucesso!');
             $('#butinserirnota').addClass("disabled");
+            $('.optionCameraNota').addClass("disabled");
             $('#butinserirnota').html("ENVIADO");
             $('.item-assinatura').removeClass("disabled");
             myApp.accordionOpen(".item-assinatura");
@@ -2419,6 +2419,7 @@ function enviarassinatura(dataURL)
             dataType: "json",
          success: function(data){
             myApp.hideIndicator();
+            localStorage.setItem("idimei", "");
             myApp.alert('Processo concluído com sucesso!', function () { window.location = "index.html";});
 
         }
@@ -7488,7 +7489,7 @@ function vendas(alvo){
 
     // carrega vendas
     $.ajax({
-        url: $server+"Gerar_json.php?idvendedor="+localStorage.getItem("idvendedor")+"&op=imei&action=listImei",
+        url: $server+"Gerar_json.php?idvendedor="+localStorage.getItem("idvendedor")+"&op=venda&action=listImei",
         dataType: "json",
         success: function(data){
             myApp.hideIndicator();
