@@ -1834,10 +1834,11 @@ console.log(imageData);
     $(".resulttext").html("");
     $(".resulttext").removeAttr("style");
 
-    var image = "data:image/jpeg;base64," + imageData;
-    $('#use').removeClass("disabled");
+    var image = "data:image/png;base64," + imageData;
 
     $('#upload-demo').attr('src', image);
+    $('#use').removeClass("disabled");
+
     var resize = new Croppie(document.getElementById('upload-demo'), {
         viewport: { width: 200, height: 70 },
         boundary: { width: 300, height: 200 },
@@ -1852,7 +1853,7 @@ console.log(imageData);
         myApp.showIndicator();
 
         resize.result('base64').then(function(imageData) {
-            //console.log(dataImg);
+            console.log(dataImg);
             //var data = [{ image: dataImg }, { name: 'myimgage.jpg' }];
             dataImgCod = imageData.replace('data:image/png;base64,', '');
             var objeto = {
