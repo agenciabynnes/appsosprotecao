@@ -2,7 +2,7 @@
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android" android-versionCode="5" ios-CFBundleVersion="0.0.5" version="0.0.5" id="com.sosprotecao.android">
 <!--
 id="com.sosprotecao.ios"
-id="com.sosprotecao.android"
+id="com.sosprotecao.android" 
  -->
 <name>SOS PROTEÇÃO</name>
 <description>Proteção para celulares e eletrônicos contra acidentes</description>
