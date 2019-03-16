@@ -32,7 +32,7 @@
     <script type="text/javascript" src="js/croppie.js"></script>
   </head>
 
-  <body class="layout-white theme-indigo" onunload="goingAway();">      
+  <body class="layout-white theme-teal" onunload="goingAway();">      
     <div class="statusbar-overlay"></div>
     <div class="panel-overlay"></div>
     <div class="panel panel-left panel-reveal">
@@ -221,10 +221,41 @@
                         </div>
                       </li>
 
+                      <li class="accordion-item item-termo disabled">
+                        <a href="#" class="item-content item-link">
+                          <div class="item-inner">
+                            <div class="item-title">4 - TERMO DO USO</div>
+                          </div>
+                        </a>
+                        <div class="accordion-item-content">
+                          <div class="content-block">
+                            <div class="content-block-text">Informe o nome e o número de celular do cliente, para enviar o TERMO DE USO, depois é só clicar em ENVIAR.</div>
+                            <div class="item-content">
+                              <div class="item-inner">
+                                <div class="item-title label">Nome</div>
+                                <div class="item-input">
+                                  <input placeholder="Digite o nome do cliente" type="text" name="nome-cel" id="nome-cel" class="keypress">
+                                </div>
+                                <div class="item-title label">Número de celular</div>
+                                <div class="item-input">
+                                  <input placeholder="Digite o número de celular" type="tel" name="number-cel" id="number-cel" class="cel keypress">
+                                </div>
+                              <div class="list-block no-margin-auto padding-top10 containeruse">
+                                <a href="#" id="termouso" class="disabled button button-big button-fill button-raised color-orange">VISUALIZAR TERMO</a>
+                              </div>
+                                <p class="buttons-row">
+                                  <a href="#" id="butinserirtermo" class="disabled button button-big button-fill button-raised color-green">ENVIAR</a>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>                      
+
                       <li class="accordion-item item-assinatura disabled">
                         <a href="#" class="item-content item-link">
                           <div class="item-inner">
-                            <div class="item-title">4 - ASSINATURA</div>
+                            <div class="item-title">5 - ASSINATURA</div>
                           </div>
                         </a>
                         <div class="accordion-item-content">
@@ -3331,6 +3362,21 @@
                 <div class="list-block-label no-margin-auto"><a href="#" class="white close-popup">Fechar</a></div>
               </div>
             </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- termo de uso -->
+    <div class="popup popup-termo tablet-fullscreen">
+      <a href="#" class="close-popup floating-top white bg-red">
+        <i class="fa fa-times"></i>
+      </a>
+      <div class="view">
+        <div class="page">
+          <div class="page-content login-screen-content">
+            <h1 style="margin: 20px 20px;color: #009688;">TERMO DE USO</h1>
+            <div class="content-block cont-termouso" style="margin: 0 20px;text-align: justify;"></div>
           </div>
         </div>
       </div>

@@ -32,7 +32,7 @@ options = {onKeyPress: function(val, e, field, options) {
 
 $(document).ready(function(){
 
-  $('.phone').mask(maskBehavior, options);
+  $('.cel').mask(maskBehavior, options);
   $('.cnpj').mask('00.000.000/0000-00', {reverse: true});
   $('.cpf').mask('000.000.000-00', {reverse: true});
   $('.money').mask('000.000.000.000.000,00', {reverse: true});
@@ -2240,6 +2240,84 @@ function enviarnota()
             $('#butinserirnota').addClass("disabled");
             $('.optionCameraNota').addClass("disabled");
             $('#butinserirnota').html("ENVIADO");
+            $('.item-termo').removeClass("disabled");
+            myApp.accordionOpen(".item-termo");
+
+        }
+         ,error:function(data){
+            myApp.hideIndicator();
+            myApp.alert('Erro! Tente novamente.');
+         }
+        });
+}
+
+
+///////////////////////////// acao enviar termo ///////////////////////////
+
+$(document).ready(function(){
+
+    // carrega termo de uso
+    $.ajax({
+        url: $server+"Gerar_json.php?idtermo=1&op=termo&action=listTermo",
+        dataType: "json",
+        success: function(data){
+            myApp.hideIndicator();
+            if (data) {
+                var datatermo="";
+
+                datatermo = data[0].descricao;
+                console.log(datatermo);
+                $(".cont-termouso").html(nl2br(datatermo));
+                myApp.hideIndicator();
+            }
+        }
+        ,error:function(data){
+            console.log(data);
+            myApp.hideIndicator();
+        }
+    });
+
+});
+
+$(".keypress").keypress(function() {
+  if ($("#number-cel").val().length>=13 && $("#nome-cel").val()!="") {
+   $('#termouso').removeClass("disabled"); 
+   $('#butinserirtermo').removeClass("disabled"); 
+  }
+});
+
+$('#termouso').on('click', function(){
+    myApp.popup(".popup-termo");
+});
+
+
+$('#butinserirtermo').on('click', function(){
+    //alert("enviar");
+    if ($("#number-cel").val()!=""){
+        enviartermo();
+    }else{
+        myApp.alert("Opps! Favor preencha todos os campos.");
+    }
+});
+
+///////////////////////////// enviar termo ///////////////////////////
+function enviartermo()
+{
+        myApp.showIndicator();
+        var cel = $("#number-cel").val();
+        var nome = $("#nome-cel").val();
+        $$url = $server+"Gerar_json.php?";
+        $.ajax({
+            type: "post",
+            url: $$url,
+            data: "cel="+cel+"&nome="+nome+"&idimei="+localStorage.getItem("idimei")+"&op=venda&action=termoUso",
+            dataType: "json",
+         success: function(data){
+            console.log(data);
+            myApp.hideIndicator();
+            myApp.alert('Termo de uso enviado com sucesso!');
+            $('#termouso').addClass("disabled");
+            $('#butinserirtermo').html("ENVIADO");
             $('.item-assinatura').removeClass("disabled");
             myApp.accordionOpen(".item-assinatura");
 
@@ -2429,6 +2507,8 @@ function enviarassinatura(dataURL)
          }
         });
 }
+
+
 
 /////////////////////////// acao editar Profile ////////////////////////
 
@@ -13333,3 +13413,7 @@ $(".selcor").spectrum({
     ["#600","#783f04","#7f6000","#274e13","#0c343d","#073763","#20124d","#4c1130"]
     ]
 });
+function nl2br(str, is_xhtml) {
+    var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />'   : '<br>';
+    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag   + '$2');
+}
