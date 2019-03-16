@@ -2333,9 +2333,9 @@ function enviartermo()
 ///////////////////////////////////// assinatura /////////////////////////////
 function assinatura() {
 
-    var orientation = window.orientation || screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).type;
+    var orientation = window.orientation;
     console.log("orientation = "+orientation);
-    if (orientation === "landscape-primary" || orientation === "landscape-secondary") {
+    if (orientation === 90) {
 
 
 
@@ -2470,8 +2470,8 @@ function assinatura() {
         });*/
 
 
-    } else if (orientation === "portrait-secondary" || orientation === "portrait-primary") {
-        console.log("Mmmh... you should rotate your device to landscape");
+    } else{
+        console.log("Mmmh... você deve girar seu dispositivo para paisagem");
         $(".rotationpage").show();
         pageassinatura = true;
     }
