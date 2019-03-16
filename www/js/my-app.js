@@ -2266,7 +2266,7 @@ $(document).ready(function(){
                 var datatermo="";
 
                 datatermo = data[0].descricao;
-                console.log(datatermo);
+                //console.log(datatermo);
                 $(".cont-termouso").html(nl2br(datatermo));
                 myApp.hideIndicator();
             }
@@ -2333,8 +2333,8 @@ function enviartermo()
 ///////////////////////////////////// assinatura /////////////////////////////
 function assinatura() {
 
-    var orientation = screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).type;
-
+    var orientation = window.orientation || screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).type;
+    console.log("orientation = "+orientation);
     if (orientation === "landscape-primary" || orientation === "landscape-secondary") {
 
 
@@ -2477,7 +2477,7 @@ function assinatura() {
     }
 }
 window.addEventListener("orientationchange", function() {
-    if (screen.orientation.angle==90 && pageassinatura==true) {
+    if (window.orientation==90 && pageassinatura==true) {
         $(".rotationpage").hide();
         assinatura();
     }else if(pageassinatura==true){
