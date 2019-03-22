@@ -49,6 +49,17 @@ h6, .h6 {
 .show {
     display: block !important;
 }
+
+/* input PWA */
+.inputpwa{
+    opacity: 0;
+    height: 50px;
+    position: absolute;
+    width: 100%;
+    z-index: 9999;
+}
+
+
 /* dashboard */
 .titsolicitacoes, .nomesolicitacoes{
     overflow: hidden;
