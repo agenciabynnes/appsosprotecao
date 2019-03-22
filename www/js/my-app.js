@@ -65,7 +65,7 @@ var bannerview = 0;
 var atualizamaptime;
 var alertadechegadahometime;
 var pageassinatura = false;
-var device = "";
+
 
 logado();
 
@@ -1862,7 +1862,7 @@ myApp.onPageInit('inserirvendas', function (page) {
     ];
 
     // verifica se é App
-    if (device.platform) {
+    if (window.device) {
         // esconte input pwa
         $("#fileProfile").hide();
 
@@ -1922,7 +1922,7 @@ function onSuccessProfile(imageData) {
     $(".resulttext").removeAttr("style");
 
     // verifica se é App
-    if (device.platform) {
+    if (window.device) {
         var image = "data:image/jpeg;base64," + imageData;
     }else{
         var image = imageData;
@@ -2008,7 +2008,7 @@ function onSuccessProfile(imageData) {
                         $('#uploadimei').removeClass("disabled");
                     }
                     //verifica se não é app nem versao android
-                    if (!device.platform && !myApp.device.android) {
+                    if (!window.device && !myApp.device.android) {
                         mainView.router.back();
                         atualizarviewpage();                    
                     }
@@ -2018,7 +2018,7 @@ function onSuccessProfile(imageData) {
                     $('#uploadimei').removeClass("show");
                     myApp.alert('IMEI não reconhecido. Favor tentar novamente!', function () {
                         //verifica se não é app nem versao android
-                        if (!device.platform && !myApp.device.android) {
+                        if (!window.device && !myApp.device.android) {
                             mainView.router.back();
                             atualizarviewpage();                 
                         }
@@ -2261,7 +2261,7 @@ function onSuccessTelefone(imageData) {
     $('#butinserirtelefone').removeClass("disabled");
 
     // verifica se é App
-    if (device.platform) {
+    if (window.device) {
         var image = "data:image/jpeg;base64," + imageData;
     }else{
         var image = imageData;
@@ -2312,7 +2312,7 @@ myApp.onPageInit('inserirvendas', function (page) {
 
 
     // verifica se é App
-    if (device.platform) {
+    if (window.device) {
         // esconte input pwa
         $("#fileTelefone").hide();
 
@@ -2435,7 +2435,7 @@ function onSuccessNota(imageData) {
     $('#butinserirnota').removeClass("disabled");
 
     // verifica se é App
-    if (device.platform) {
+    if (window.device) {
         var image = "data:image/jpeg;base64," + imageData;
     }else{
         var image = imageData;
@@ -2486,7 +2486,7 @@ myApp.onPageInit('inserirvendas', function (page) {
 
 
     // verifica se é App
-    if (device.platform) {
+    if (window.device) {
         // esconte input pwa
         $("#fileNota").hide();
 
